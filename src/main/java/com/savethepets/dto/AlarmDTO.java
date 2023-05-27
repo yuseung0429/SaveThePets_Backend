@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class AlarmDTO {
     Long postId;
-    String receiverId;
-    String senderId;
+    String nickname;
     Byte[] picture;
-    String breed;
+    int species;
+    int breed;
     Date timestamp;
     int type;
 

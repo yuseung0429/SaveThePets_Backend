@@ -13,14 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.savethepets.dto;
+import com.savethepets.dto.*;
 
 @Slf4j
 @RestController
 @RequestMapping(value = "/comment")
 
 public class CommentController {
-	private final CommentServiceImpl commentService;
+	//private final CommentServiceImpl commentService;
 	
 	@PostMapping("/create")
 	ResponseEntity<Boolean> createComment(@RequestBody CommentInfoDTO commentInfoDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};

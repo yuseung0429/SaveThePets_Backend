@@ -6,9 +6,14 @@ public class Post {
 	Long postId;
 	String userId;
 	String content;
-	String species;
-	String breed;
+	int species;
+	int breed;
 	int type;
+	int speciesAi;
+	int breedAi;
+	Double accuracy;
+	Double lat;
+	Double lot;
 	Date timestamp;
 	Date time;
 }

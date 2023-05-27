@@ -3,8 +3,8 @@ package com.savethepets.dto;
 import java.util.Date;
 
 public class FilterDTO {
-    String species;
-    String breed;
+    int species;
+    int breed;
     int type;
     Double ulat;
     Double ulot;

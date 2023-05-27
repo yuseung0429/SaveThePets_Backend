@@ -15,17 +15,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.savethepets.dto;
+import com.savethepets.dto.*;
 
 @Slf4j
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
-	
-	private final UserServiceImpl userServiceImpl;
+	//private final UserServiceImpl userServiceImpl;
 	
 	@PostMapping("/signup")
-	ResponseEntity<Boolean> signup(@RequestBody UserDTO userDTO) {return new ResponseEntity<>(HttpStatus.OK);};
+	ResponseEntity<TokenDTO> signup(@RequestBody String kakaoToken) {return new ResponseEntity<>(HttpStatus.OK);};
 	
 	@PostMapping("/leaveid")
 	ResponseEntity<Boolean> leaveId(@RequestBody String userId) {return new ResponseEntity<>(HttpStatus.OK);};
@@ -50,5 +49,8 @@ public class UserController {
 	
 	@PostMapping("/bookmark")
 	ResponseEntity<List<PostDTO>> getBookmarks(@RequestBody String userId) {return new ResponseEntity<>(null, HttpStatus.OK);};
+	
+	@PostMapping("/id")
+	ResponseEntity<String> getUserId(@RequestBody String token) {return new ResponseEntity<>(null, HttpStatus.OK);};
 	
 }

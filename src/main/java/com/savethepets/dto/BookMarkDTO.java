@@ -1,6 +1,6 @@
 package com.savethepets.dto;
 
-public class BookMarkDTO {
+public class BookmarkDTO {
     String userId;
     Long postId;
 }

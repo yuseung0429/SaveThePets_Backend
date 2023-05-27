@@ -1,7 +1,7 @@
 package com.savethepets.dto;
 
 public class AnalyzedPictureDTO {
-    String speciesAi;
-    String breedAi;
+    int speciesAi;
+    int breedAi;
     Double accuracy;
 }

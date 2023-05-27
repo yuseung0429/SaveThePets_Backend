@@ -7,8 +7,8 @@ public class CreatePostDTO {
     String userId;
     String content;
     List<Byte[]> picture;
-    String species;
-    String breed;
+    int species;
+    int breed;
     Date time;
     Double lat;
     Double lot;

@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.savethepets.dto;
+import com.savethepets.dto.*;
 
 @Slf4j
 @RestController
 @RequestMapping(value = "/commentreport")
 
 public class CommentReportController {
-	private final CommentReportServiceImpl commentReportService;
+	//private final CommentReportServiceImpl commentReportService;
 	
 	@PostMapping("/create")
 	ResponseEntity<Boolean> createPostReport(@RequestBody CommentReportDTO commentReportDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};

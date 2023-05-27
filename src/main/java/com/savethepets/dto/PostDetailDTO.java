@@ -8,11 +8,12 @@ public class PostDetailDTO {
     String userId;
     String nickname;
     Byte[] picture;
-    String species;
-    String breed;
+    int species;
+    int breed;
     String content;
     Date time;
     int type;
+    Boolean bookmarked;
     List<Byte[]> pictures;
     List<CommentDTO> comments;
     List<TimelineDTO> timeline;
