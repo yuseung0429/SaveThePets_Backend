@@ -1,8 +1,6 @@
 package com.savethepets.dto;
 
 public class CommentDTO {
-    String userId;
-    String nickname;
+    Long postId;
     String content;
-    Byte[] picture;
 }

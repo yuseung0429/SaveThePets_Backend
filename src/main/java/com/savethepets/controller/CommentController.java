@@ -23,10 +23,10 @@ public class CommentController {
 	//private final CommentServiceImpl commentService;
 	
 	@PostMapping("/create")
-	ResponseEntity<Boolean> createComment(@RequestBody CommentInfoDTO commentInfoDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};
+	ResponseEntity<Boolean> createComment(@RequestBody CommentDTO commentDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};
 	
 	@PutMapping("/update")
-	ResponseEntity<Boolean> updateComment(@RequestBody CommentInfoDTO commentInfoDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};
+	ResponseEntity<Boolean> updateComment(@RequestBody CommentDTO commentDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};
 	
 	@DeleteMapping("/remove")
 	ResponseEntity<Boolean> removeComment(@RequestBody Long commentId) {return new ResponseEntity<>(null, HttpStatus.OK);};

@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 public class CreatePostDTO {
-    String userId;
     String content;
     List<Byte[]> picture;
     int species;

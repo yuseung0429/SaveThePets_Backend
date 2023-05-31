@@ -1,7 +1,6 @@
 package com.savethepets.dto;
 
-
-public class TokenDTO {
+public class TokenInfoDTO {
 	String token;
 	Boolean authenticated;
 }

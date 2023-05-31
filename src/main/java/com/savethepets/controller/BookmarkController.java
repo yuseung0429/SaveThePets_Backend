@@ -22,8 +22,8 @@ public class BookmarkController {
 	//private final BookmarkServiceImpl bookmarkService;
 	
 	@PostMapping("/create")
-	ResponseEntity<Boolean> createBookmark(@RequestBody BookmarkDTO bookmarkDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};
+	ResponseEntity<Boolean> createBookmark(@RequestBody Long postId) {return new ResponseEntity<>(null, HttpStatus.OK);};
 	
 	@DeleteMapping("/remove")
-	ResponseEntity<Boolean> removeBookmark(@RequestBody BookmarkDTO bookmarkDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};
+	ResponseEntity<Boolean> removeBookmark(@RequestBody Long postId) {return new ResponseEntity<>(null, HttpStatus.OK);};
 }

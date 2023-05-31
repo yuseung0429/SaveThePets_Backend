@@ -2,11 +2,11 @@ package com.savethepets.dto;
 
 import java.util.Date;
 
-public class PostDTO {
+public class PostInfoDTO {
     Long postId;
     Date time;
-    Double lat;
-    Double lot;
+    Double postLat;
+    Double postLot;
     int type;
     int species;
     int breed;

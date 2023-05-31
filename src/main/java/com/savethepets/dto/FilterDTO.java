@@ -6,9 +6,9 @@ public class FilterDTO {
     int species;
     int breed;
     int type;
-    Double ulat;
-    Double ulot;
+    Double userLat;
+    Double userLot;
     int range;
-    Date startdate;
-    Date enddate;
+    Date startDate;
+    Date endDate;
 }

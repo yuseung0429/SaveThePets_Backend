@@ -2,14 +2,15 @@ package com.savethepets.dto;
 
 import java.util.Date;
 
-public class MyCommentDTO {
+public class MyCommentInfoDTO {
     Long postId;
-    Double lat;
-    Double lot;
+    Double postLat;
+    Double postLot;
     int species;
     int breed;
     int type;
-    Byte[] picuture;
+    Byte[] picture;
     String content;
+    Date time;
     Date timestamp;
 }

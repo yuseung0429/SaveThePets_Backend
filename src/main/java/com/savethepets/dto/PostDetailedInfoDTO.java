@@ -3,11 +3,7 @@ package com.savethepets.dto;
 import java.util.Date;
 import java.util.List;
 
-public class PostDetailDTO {
-    Long postId;
-    String userId;
-    String nickname;
-    Byte[] picture;
+public class PostDetailedInfoDTO {
     int species;
     int breed;
     String content;
@@ -15,7 +11,6 @@ public class PostDetailDTO {
     int type;
     Boolean bookmarked;
     List<Byte[]> pictures;
-    List<CommentDTO> comments;
-    List<TimelineDTO> timeline;
-
+    List<CommentInfoDTO> comments;
+    List<TimelineInfoDTO> timeline;
 }

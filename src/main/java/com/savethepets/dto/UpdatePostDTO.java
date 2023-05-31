@@ -9,7 +9,6 @@ public class UpdatePostDTO {
     int species;
     int breed;
     Date time;
-    Double lat;
-    Double lot;
-
+    Double postLat;
+    Double postLot;
 }
