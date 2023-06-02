@@ -2,6 +2,7 @@ package com.savethepets.controller;
 
 import com.savethepets.service.UserServiceImpl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -20,8 +21,9 @@ import com.savethepets.dto.*;
 @Slf4j
 @RestController
 @RequestMapping(value = "/user")
+@RequiredArgsConstructor
 public class UserController {
-	//private final UserServiceImpl userServiceImpl;
+	private final UserServiceImpl userServiceImpl;
 	
 	@GetMapping("/signup")
 	ResponseEntity<TokenInfoDTO> signup(@RequestBody String kakaoToken) {return new ResponseEntity<>(HttpStatus.OK);};

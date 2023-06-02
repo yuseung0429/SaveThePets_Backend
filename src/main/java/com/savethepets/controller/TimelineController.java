@@ -3,6 +3,7 @@ package com.savethepets.controller;
 
 import com.savethepets.service.TimelineServiceImpl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
@@ -18,13 +19,14 @@ import com.savethepets.dto.*;
 @Slf4j
 @RestController
 @RequestMapping(value = "/timeline")
+@RequiredArgsConstructor
 
 public class TimelineController {
-	//private final TimelineServiceImpl timelineService;
+	private final TimelineServiceImpl timelineService;
 	
-	@PostMapping("/create")
+	@PostMapping()
 	ResponseEntity<Boolean> createTimeline(@RequestBody TimelineDTO timelineDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};
 	
-	@DeleteMapping("/remove")
+	@DeleteMapping()
 	ResponseEntity<Boolean> removeTimeline(@RequestBody TimelineDTO timelineDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};
 }

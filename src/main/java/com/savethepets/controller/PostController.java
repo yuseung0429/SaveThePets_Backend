@@ -2,6 +2,7 @@ package com.savethepets.controller;
 
 import com.savethepets.service.PostServiceImpl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -24,16 +25,17 @@ import com.savethepets.dto.*;
 @Slf4j
 @RestController
 @RequestMapping(value = "/post")
+@RequiredArgsConstructor
 public class PostController {
-	//private final PostServiceImpl postService;
+	private final PostServiceImpl postService;
 	
-	@PostMapping("/create")
+	@PostMapping()
 	ResponseEntity<Boolean> createPost(@RequestBody CreatePostDTO createPostDTO) {return new ResponseEntity<>(HttpStatus.OK);};
 
-	@DeleteMapping("/remove")
+	@DeleteMapping()
 	ResponseEntity<Boolean> removePost(@RequestBody Long postId) {return new ResponseEntity<>(HttpStatus.OK);};
 
-	@PutMapping("/update")
+	@PutMapping()
 	ResponseEntity<Boolean> updatePost(@RequestBody UpdatePostDTO updatePostDTO) {return new ResponseEntity<>(HttpStatus.OK);};
 	
 	@GetMapping("/list/{number}")
