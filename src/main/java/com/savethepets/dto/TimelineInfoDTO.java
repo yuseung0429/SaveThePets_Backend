@@ -9,5 +9,5 @@ public class TimelineInfoDTO {
     Double postLot;
     int species;
     int breed;
-    Byte[] picture;
+    byte[] picture;
 }

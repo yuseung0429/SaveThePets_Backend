@@ -10,7 +10,7 @@ public class PostDetailedInfoDTO {
     Date time;
     int type;
     Boolean bookmarked;
-    List<Byte[]> pictures;
+    List<byte[]> pictures;
     List<CommentInfoDTO> comments;
     List<TimelineInfoDTO> timeline;
 }

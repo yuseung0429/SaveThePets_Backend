@@ -5,7 +5,7 @@ import java.util.Date;
 public class AlarmInfoDTO {
     Long postId;
     String nickname;
-    Byte[] picture;
+    byte[] picture;
     int species;
     int breed;
     Date timestamp;

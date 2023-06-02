@@ -10,5 +10,5 @@ public class PostInfoDTO {
     int type;
     int species;
     int breed;
-    Byte[] picture;
+    byte[] picture;
 }
