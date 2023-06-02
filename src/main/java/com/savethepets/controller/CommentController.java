@@ -1,7 +1,9 @@
 package com.savethepets.controller;
 
+import com.savethepets.service.BookmarkServiceImpl;
 import com.savethepets.service.CommentServiceImpl;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
@@ -18,16 +20,16 @@ import com.savethepets.dto.*;
 @Slf4j
 @RestController
 @RequestMapping(value = "/comment")
-
+@RequiredArgsConstructor
 public class CommentController {
-	//private final CommentServiceImpl commentService;
+	private final CommentServiceImpl commentService;
 	
-	@PostMapping("/create")
+	@PostMapping()
 	ResponseEntity<Boolean> createComment(@RequestBody CommentDTO commentDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};
 	
-	@PutMapping("/update")
+	@PutMapping()
 	ResponseEntity<Boolean> updateComment(@RequestBody CommentDTO commentDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};
 	
-	@DeleteMapping("/remove")
+	@DeleteMapping()
 	ResponseEntity<Boolean> removeComment(@RequestBody Long commentId) {return new ResponseEntity<>(null, HttpStatus.OK);};
 }
