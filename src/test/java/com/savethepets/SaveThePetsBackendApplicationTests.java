@@ -6,33 +6,37 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 import com.savethepets.entity.User;
+import com.savethepets.repository.UserRepository;
 import com.savethepets.service.UserServiceImpl;
+
+import jakarta.persistence.EntityManager;
 
 
 
 @SpringBootTest
 class SaveThePetsBackendApplicationTests {
 	private final UserServiceImpl userService;
-
+	private final UserRepository userRepository;
 	@Autowired
-	public SaveThePetsBackendApplicationTests(UserServiceImpl userService) {
+	public SaveThePetsBackendApplicationTests(UserServiceImpl userService, UserRepository userRepository) {
 	    this.userService = userService;
+	    this.userRepository = userRepository;
 	}
 	@Test
 	void contextLoads() {
-//        User temp = new User();
-//        temp.setUserId("yuseung0429@naver.com");
-//        temp.setNickname("이유승");
-//        byte[] imageData = {
-//        	    -1, -40, -1, -32, 0, 17, 8, 6, 6, 7, 6, 5, 8, 7, 7, 7,
-//        	    9, 9, 8, 10, 12, 20, 13, 12, 11, 11, 12, 25, 18, 19, 15, 20,
-//        	    29, 26, 31, 30, 29, 26, 28, 28, 32, 36, 46, 39, 32, 34, 44, 35,
-//        	    28, 28, 40, 55, 41, 44, 48, 49, 52, 52, 52, 31, 39, 57, 61, 56 };
-//        temp.setPicture(imageData);
-//        temp.setEndpoint("a");
-//        temp.setP256dh("a");
-//        temp.setAuth("a");
-//        System.out.println(userService.signup(temp));
-//		  System.out.println(userService.leaveId("yuseung0429@naver.com"));
+//		for(int i = 0; i<10000; i++)
+//		{
+//			User temp = new User();
+//			temp.setUserId("user"+ i +"@naver.com");
+//			temp.setNickname("유저"+i);
+//			byte[] data = {(byte) i};
+//			temp.setPicture(data);
+//			temp.setEndpoint(String.valueOf(i));
+//			temp.setP256dh(String.valueOf(i));
+//			temp.setAuth(String.valueOf(i));
+//			userService.signup(temp);
+//		}
+		User temp = userRepository.findOne("user100@naver.com");
+		System.out.println(temp.getNickname());
 	}
 }

@@ -1,8 +1,7 @@
 package com.savethepets.entity;
 
-import java.io.Serializable;
+import com.savethepets.id.PostPictureId;
 
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -20,8 +19,3 @@ public class PostPicture {
 	byte[] picture;
 }
 
-@Embeddable
-class PostPictureId implements Serializable {
-	Long postId;
-	int sequence;
-}

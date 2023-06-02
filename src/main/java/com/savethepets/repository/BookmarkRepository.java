@@ -1,7 +1,35 @@
 package com.savethepets.repository;
 
-import jakarta.persistence.EntityManager;
+import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+import com.savethepets.entity.Bookmark;
+import com.savethepets.id.BookmarkId;
+
+import jakarta.persistence.EntityManager;
+import lombok.RequiredArgsConstructor;
+
+@Repository
+@RequiredArgsConstructor
 public class BookmarkRepository {
-	EntityManager em;
+	private final EntityManager em;
+	
+	public void save(Bookmark bookmark) {
+		em.persist(bookmark);
+	}
+	
+	public void remove(Bookmark bookmark) {
+		em.remove(bookmark);
+	}
+	
+	public Bookmark findOne(BookmarkId bookmarkId) {
+	    return em.find(Bookmark.class, bookmarkId);
+	}
+	
+	public List<Bookmark> findByUserId(String userId)
+	{
+		String query = "select b from Bookmark b where b.userId = :userId";
+		return em.createQuery(query, Bookmark.class).setParameter("userId", userId).getResultList();
+	}
 }

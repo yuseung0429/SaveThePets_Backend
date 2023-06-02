@@ -1,9 +1,9 @@
 package com.savethepets.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-import jakarta.persistence.Embeddable;
+import com.savethepets.id.BookmarkId;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -18,10 +18,4 @@ public class Bookmark {
 	@EmbeddedId
 	BookmarkId bookmarkId;
 	Date timestamp;
-}
-
-@Embeddable
-class BookmarkId implements Serializable {
-    String userId;
-    Long postId;
 }

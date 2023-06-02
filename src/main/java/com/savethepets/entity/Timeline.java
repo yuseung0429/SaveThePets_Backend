@@ -1,8 +1,7 @@
 package com.savethepets.entity;
 
-import java.io.Serializable;
+import com.savethepets.id.TimelineId;
 
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -16,11 +15,4 @@ import lombok.Setter;
 public class Timeline {
 	@EmbeddedId
 	TimelineId timelindId;
-}
-
-@Embeddable
-class TimelineId implements Serializable {
-	Long missingPostId;
-	Long sightingPostId;
-	Boolean type;
 }
