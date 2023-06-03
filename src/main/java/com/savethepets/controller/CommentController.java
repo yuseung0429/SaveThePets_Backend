@@ -22,7 +22,7 @@ import com.savethepets.dto.*;
 @RequestMapping(value = "/comment")
 @RequiredArgsConstructor
 public class CommentController {
-	private final CommentServiceImpl commentService;
+	//private final CommentServiceImpl commentService;
 	
 	@PostMapping()
 	ResponseEntity<Boolean> createComment(@RequestBody CommentDTO commentDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};

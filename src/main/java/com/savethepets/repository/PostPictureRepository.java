@@ -28,12 +28,12 @@ public class PostPictureRepository {
 	}
 	
 	public List<PostPicture> findByPostId(Long postId) {
-		String query = "select p from PostPicture p where p.postId = :postId";
+		String query = "select p from PostPictures p where p.postId = :postId";
 		return em.createQuery(query, PostPicture.class).setParameter("postId", postId).getResultList();
 	}
 	
 	public List<PostPicture> findByPostIds(List<Long> postIds) {
-		String query = "select p from PostPicture p where (p.postId in :postIds) and (p.sequence = 0)";
+		String query = "select p from PostPictures p where (p.postId in :postIds) and (p.sequence = 0)";
 		return em.createQuery(query, PostPicture.class).setParameter("postIds", postIds).getResultList();
 	}
 }

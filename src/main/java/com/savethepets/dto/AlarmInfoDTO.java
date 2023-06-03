@@ -1,13 +1,14 @@
 package com.savethepets.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class AlarmInfoDTO {
+	Long alarmId;
     Long postId;
     String nickname;
     byte[] picture;
     int species;
     int breed;
-    Date timestamp;
+    LocalDateTime timestamp;
     int type;
 }

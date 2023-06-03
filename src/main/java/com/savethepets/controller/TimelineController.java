@@ -22,7 +22,7 @@ import com.savethepets.dto.*;
 @RequiredArgsConstructor
 
 public class TimelineController {
-	private final TimelineServiceImpl timelineService;
+	//private final TimelineServiceImpl timelineService;
 	
 	@PostMapping()
 	ResponseEntity<Boolean> createTimeline(@RequestBody TimelineDTO timelineDTO) {return new ResponseEntity<>(null, HttpStatus.OK);};

@@ -28,17 +28,17 @@ public class ReportRepository {
 	}
 	
 	public List<Report> findByType(Boolean type) {
-		String query = "select r from Report r where type = :type";
+		String query = "select r from Reports r where type = :type";
 		return em.createQuery(query,Report.class).setParameter("type", type).getResultList();
 	}
 	
 	public List<Report> findByObjectIdAndType(Long objectId, Boolean type) {
-		String query = "select r from Report r where (objectId =:objectId) and (type = :type)";
+		String query = "select r from Reports r where (objectId =:objectId) and (type = :type)";
 		return em.createQuery(query,Report.class).setParameter("objectId", objectId).setParameter("type", type).getResultList();
 	}
 	
 	public List<Report> findByUserIdAndType(String userId, Boolean type) {
-		String query = "select r from Report r where (userId =:userId) and (type = :type)";
+		String query = "select r from Reports r where (userId =:userId) and (type = :type)";
 		return em.createQuery(query,Report.class).setParameter("userId", userId).setParameter("type", type).getResultList();
 	}
 	

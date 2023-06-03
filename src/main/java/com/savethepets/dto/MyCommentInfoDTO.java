@@ -1,6 +1,6 @@
 package com.savethepets.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class MyCommentInfoDTO {
     Long postId;
@@ -11,6 +11,6 @@ public class MyCommentInfoDTO {
     int type;
     byte[] picture;
     String content;
-    Date time;
-    Date timestamp;
+    LocalDateTime time;
+    LocalDateTime timestamp;
 }

@@ -29,7 +29,13 @@ public class BookmarkRepository {
 	
 	public List<Bookmark> findByUserId(String userId)
 	{
-		String query = "select b from Bookmark b where b.userId = :userId";
+		String query = "select b from Bookmarks b where b.userId = :userId";
 		return em.createQuery(query, Bookmark.class).setParameter("userId", userId).getResultList();
+	}
+	
+	public List<Long> findPostIdsByUserId(String userId)
+	{
+		String query = "select b.postId from Bookmarks b where b.userId = :userId";
+		return em.createQuery(query, Long.class).setParameter("userId", userId).getResultList();
 	}
 }

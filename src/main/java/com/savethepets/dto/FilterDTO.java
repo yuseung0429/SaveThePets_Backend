@@ -1,6 +1,6 @@
 package com.savethepets.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class FilterDTO {
     int species;
@@ -9,6 +9,6 @@ public class FilterDTO {
     Double userLat;
     Double userLot;
     int range;
-    Date startDate;
-    Date endDate;
+    LocalDateTime startDate;
+    LocalDateTime endDate;
 }

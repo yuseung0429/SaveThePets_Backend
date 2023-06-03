@@ -1,16 +1,20 @@
 package com.savethepets.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="POSTS")
 public class Post {
 	@Id
@@ -25,6 +29,6 @@ public class Post {
 	Double accuracy;
 	Double lat;
 	Double lot;
-	Date timestamp;
-	Date time;
+	LocalDateTime timestamp;
+	LocalDateTime time;
 }

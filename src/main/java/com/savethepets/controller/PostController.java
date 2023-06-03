@@ -27,7 +27,7 @@ import com.savethepets.dto.*;
 @RequestMapping(value = "/post")
 @RequiredArgsConstructor
 public class PostController {
-	private final PostServiceImpl postService;
+	//private final PostServiceImpl postService;
 	
 	@PostMapping()
 	ResponseEntity<Boolean> createPost(@RequestBody CreatePostDTO createPostDTO) {return new ResponseEntity<>(HttpStatus.OK);};

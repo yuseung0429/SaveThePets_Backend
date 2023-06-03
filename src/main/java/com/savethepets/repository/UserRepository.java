@@ -29,7 +29,7 @@ public class UserRepository{
 	
 	public List<User> findByNickname(String nickname)
 	{
-		String query = "select u from User u where u.nickname = :nickname";
+		String query = "select u from Users u where u.nickname = :nickname";
 		return em.createQuery(query, User.class).setParameter("nickname", nickname).getResultList();
 	}
 	

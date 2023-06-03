@@ -1,6 +1,6 @@
 package com.savethepets.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class UpdatePostDTO {
@@ -8,7 +8,7 @@ public class UpdatePostDTO {
     List<byte[]> picture;
     int species;
     int breed;
-    Date time;
+    LocalDateTime time;
     Double postLat;
     Double postLot;
 }

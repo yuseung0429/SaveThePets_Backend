@@ -1,10 +1,10 @@
 package com.savethepets.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class TimelineInfoDTO {
     Long sightingPostId;
-    Date time;
+    LocalDateTime time;
     Double postLat;
     Double postLot;
     int species;
