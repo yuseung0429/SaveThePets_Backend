@@ -38,6 +38,15 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public boolean removePost(Long postId) {
+        try {
+            Post post = postRepository.findOne(postId);
+            if (post != null) {
+                postRepository.remove(post);
+                return true;
+            }
+        } catch (Exception e) {
+
+        }
         return false;
     }
 
