@@ -25,12 +25,12 @@ public class CommentRepository {
     }
 	public List<Comment> findByUserId(String userId)
 	{
-		String query = "select c from Comments c where c.userId = :userId";
+		String query = "select c from Comment c where c.userId = :userId";
 		return em.createQuery(query, Comment.class).setParameter("userId", userId).getResultList();
 	}
 	public List<Comment> findByPostId(Long postId)
 	{
-		String query = "select c from Comments c where c.postId = :postId";
+		String query = "select c from Comment c where c.postId = :postId";
 		return em.createQuery(query, Comment.class).setParameter("postId", postId).getResultList();
 	}
 }

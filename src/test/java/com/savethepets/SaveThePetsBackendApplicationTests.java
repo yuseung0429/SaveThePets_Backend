@@ -4,39 +4,53 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
-import com.savethepets.entity.User;
-import com.savethepets.repository.UserRepository;
+import com.savethepets.dto.UserInfoDTO;
+import com.savethepets.service.AlarmServiceImpl;
+import com.savethepets.service.BookmarkServiceImpl;
+import com.savethepets.service.ReportServiceImpl;
 import com.savethepets.service.UserServiceImpl;
-
-import jakarta.persistence.EntityManager;
-
-
+import com.savethepets.utility.Utilities;
 
 @SpringBootTest
 class SaveThePetsBackendApplicationTests {
 	private final UserServiceImpl userService;
-	private final UserRepository userRepository;
+	private final BookmarkServiceImpl bookmarkService;
+	private final ReportServiceImpl reportService;
+	private final AlarmServiceImpl alarmService;
+	
 	@Autowired
-	public SaveThePetsBackendApplicationTests(UserServiceImpl userService, UserRepository userRepository) {
-	    this.userService = userService;
-	    this.userRepository = userRepository;
+	public SaveThePetsBackendApplicationTests(UserServiceImpl userService, ReportServiceImpl reportService, BookmarkServiceImpl bookmarkService, AlarmServiceImpl alarmService) {
+		this.userService = userService;
+		this.bookmarkService = bookmarkService;
+		this.reportService = reportService;
+		this.alarmService = alarmService;
 	}
+	
 	@Test
 	void contextLoads() {
-//		for(int i = 0; i<10000; i++)
-//		{
-//			User temp = new User();
-//			temp.setUserId("user"+ i +"@naver.com");
-//			temp.setNickname("유저"+i);
-//			byte[] data = {(byte) i};
-//			temp.setPicture(data);
-//			temp.setEndpoint(String.valueOf(i));
-//			temp.setP256dh(String.valueOf(i));
-//			temp.setAuth(String.valueOf(i));
-//			userService.signup(temp);
-//		}
-		User temp = userRepository.findOne("user100@naver.com");
-		System.out.println(temp.getNickname());
+//		//유저 게시물 불러오기
+//		System.out.println("유저 게시물 불러오기");
+//		//유저 댓글 불러오기
+//		System.out.println("유저 댓글 불러오기");
+//		//유저 알람 불러오기
+//		System.out.println("유저 알람 불러오기");
+//		//유저 북마크 불러오기
+//		System.out.println("유저 북마크 불러오기");
+//		//신고 작성하기
+//		System.out.println("신고 작성하기");
+//		//북마크 생성하기
+//		System.out.println("북마크 생성하기");
+//		//북마크 삭제하기
+//		System.out.println("북마크 삭제하기");
+//		//알람 삭제하기
+//		System.out.println("알람 삭제하기");
+		
+		Utilities.testGetUserInfo(userService, "1");
+		Utilities.testGetUserInfo(userService, "50");
+		
+		Utilities.testUpdateNickname(userService, "1", "김철수");
+		Utilities.testUpdateNickname(userService, "1", "김철수");
+		
+		Utilities.testUpdatePicture(userService, "1", "leeyuseung".getBytes());
 	}
 }

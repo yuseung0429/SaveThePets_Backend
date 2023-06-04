@@ -5,7 +5,6 @@ import com.savethepets.dto.MyCommentInfoDTO;
 import com.savethepets.dto.PostInfoDTO;
 import com.savethepets.dto.TokenInfoDTO;
 import com.savethepets.dto.UserInfoDTO;
-import com.savethepets.entity.User;
 
 import java.util.List;
 

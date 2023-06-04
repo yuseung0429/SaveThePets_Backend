@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CreatePostDTO {
     String content;
-    List<byte[]> picture;
+    List<byte[]> pictures;
     int species;
     int breed;
     LocalDateTime time;

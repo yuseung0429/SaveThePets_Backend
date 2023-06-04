@@ -22,4 +22,10 @@ public class User {
 	String endpoint;
 	String p256dh;
 	String auth;
+	
+	public User(String userId, String nickname, byte[] picture) {
+		this.userId = userId;
+		this.nickname = nickname;
+		this.picture = picture;
+	}
 }

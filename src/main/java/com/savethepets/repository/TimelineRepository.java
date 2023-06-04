@@ -28,7 +28,7 @@ public class TimelineRepository {
 	}
 	
 	public List<Timeline> findByMissingPostId(Long missingPostId) {
-		String query = "select t from Timelines t where missingPostId = :missingPostId";
+		String query = "select t from Timeline t where missingPostId = :missingPostId";
 		return em.createQuery(query,Timeline.class).setParameter("missingPostId", missingPostId).getResultList();
 	}
 	

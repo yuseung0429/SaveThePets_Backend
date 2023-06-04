@@ -24,4 +24,10 @@ public class Alarm {
 	Long postId;
 	LocalDateTime timestamp;
 	int type;
+	
+	public static final int MISSING = 0;
+    public static final int SIGHTING = 1;
+    public static final int PROTECTION = 2;
+    public static final int ADOPTION = 3;
+    public static final int COMMENT = 4;
 }

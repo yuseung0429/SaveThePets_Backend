@@ -13,6 +13,7 @@ import lombok.Setter;
 public class PostInfoDTO {
     Long postId;
     LocalDateTime time;
+    LocalDateTime timestamp;
     Double postLat;
     Double postLot;
     int type;
@@ -24,6 +25,7 @@ public class PostInfoDTO {
     {
     	this.postId = post.getPostId();
     	this.time = post.getTime();
+    	this.timestamp = post.getTimestamp();
     	this.postLat = post.getLat();
     	this.postLot = post.getLot();
     	this.type = post.getType();

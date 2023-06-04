@@ -27,17 +27,17 @@ public class PostRepository {
     }
 	
 	public List<Post> findAll(){
-		String query = "select p from Posts p";
+		String query = "select p from Post p";
 		return em.createQuery(query, Post.class).getResultList();
 	}
 	
 	public List<Post> findByPostIds(List<Long> postIds){
-		String query = "select p from Posts p where p.postId in :postIds";
+		String query = "select p from Post p where p.postId in :postIds";
 		return em.createQuery(query, Post.class).setParameter("postIds", postIds).getResultList();
 	}
 	
 	public List<Post> findByUserId(String userId){
-		String query = "select p from Posts p where userId = :userId";
+		String query = "select p from Post p where userId = :userId";
 		return em.createQuery(query, Post.class).setParameter("userId", userId).getResultList();
 	}
 }
