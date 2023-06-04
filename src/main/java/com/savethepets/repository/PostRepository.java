@@ -17,6 +17,11 @@ public class PostRepository {
 	public void save(Post post) {
 		em.persist(post);
 	}
+
+	public Long create(Post post) {
+		save(post);
+		return post.getPostId();
+	}
 	
 	public void remove(Post post) {
 		em.remove(post);

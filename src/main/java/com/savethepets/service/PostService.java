@@ -10,7 +10,7 @@ import java.util.List;
 
 
 public interface PostService {
-    boolean createPost(Post post);
+    boolean createPost(Post post, List<byte[]> pictures);
     boolean removePost(Long postId);
     boolean updatePost(Post post);
     List<PostInfoDTO> getBoardPosts(int start, int end);

@@ -1,10 +1,9 @@
 package com.savethepets.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name="POSTS")
 public class Post {
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long postId;
 	String userId;
 	String content;
@@ -31,4 +30,7 @@ public class Post {
 	Double lot;
 	LocalDateTime timestamp;
 	LocalDateTime time;
+
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<PostPicture> pictures;
 }
