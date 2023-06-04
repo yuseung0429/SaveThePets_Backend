@@ -28,7 +28,7 @@ public class PostPictureRepository {
 	}
 	
 	public List<PostPicture> findByPostId(Long postId) {
-		String query = "select p from PostPicture p where p.postId = :postId";
+		String query = "select p from PostPicture p where p.postpictureid.postId = :postId";
 		return em.createQuery(query, PostPicture.class).setParameter("postId", postId).getResultList();
 	}
 	

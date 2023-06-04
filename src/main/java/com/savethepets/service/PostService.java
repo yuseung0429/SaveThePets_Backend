@@ -12,7 +12,7 @@ import java.util.List;
 public interface PostService {
     boolean createPost(Post post, List<byte[]> pictures);
     boolean removePost(Long postId);
-    boolean updatePost(Post post);
+    boolean updatePost(Post post, List<byte[]> pictures);
     List<PostInfoDTO> getBoardPosts(int start, int end);
     List<PostInfoDTO> getMapPosts(Double userLat, Double userLot);
     List<PostInfoDTO> getFilteredPosts(FilterDTO filter);
