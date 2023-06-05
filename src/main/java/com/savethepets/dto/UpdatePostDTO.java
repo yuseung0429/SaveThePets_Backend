@@ -6,6 +6,7 @@ import java.util.List;
 public class UpdatePostDTO {
     Long postId;
     List<byte[]> picture;
+    String content;
     int species;
     int breed;
     LocalDateTime time;
