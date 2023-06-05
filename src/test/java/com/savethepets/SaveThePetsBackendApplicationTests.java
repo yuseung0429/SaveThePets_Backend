@@ -28,16 +28,7 @@ class SaveThePetsBackendApplicationTests {
 	
 	@Test
 	void contextLoads() {
-//		//유저 게시물 불러오기
-//		System.out.println("유저 게시물 불러오기");
-//		//유저 댓글 불러오기
-//		System.out.println("유저 댓글 불러오기");
-//		//유저 알람 불러오기
-//		System.out.println("유저 알람 불러오기");
-//		//유저 북마크 불러오기
-//		System.out.println("유저 북마크 불러오기");
-//		//신고 작성하기
-//		System.out.println("신고 작성하기");
+
 //		//북마크 생성하기
 //		System.out.println("북마크 생성하기");
 //		//북마크 삭제하기
@@ -45,12 +36,18 @@ class SaveThePetsBackendApplicationTests {
 //		//알람 삭제하기
 //		System.out.println("알람 삭제하기");
 		
-		Utilities.testGetUserInfo(userService, "1");
-		Utilities.testGetUserInfo(userService, "50");
-		
-		Utilities.testUpdateNickname(userService, "1", "김철수");
-		Utilities.testUpdateNickname(userService, "1", "김철수");
-		
-		Utilities.testUpdatePicture(userService, "1", "leeyuseung".getBytes());
+//		Utilities.testGetUserInfo(userService, "1");
+//		Utilities.testGetUserInfo(userService, "50");
+//		Utilities.testUpdateNickname(userService, "1", "김철수");
+//		Utilities.testUpdateNickname(userService, "1", "김철수");
+//		Utilities.testUpdatePicture(userService, "1", "leeyuseung".getBytes());
+//		Utilities.testGetMyPosts(userService, "3");
+//		Utilities.testGetMyComments(userService, "3");
+//		Utilities.testGetAlarms(userService, "1");
+//		Utilities.testGetBookmarks(userService, "3");
+//		Utilities.testCreateReport(reportService, (long) 30, "2", true, 0, "바보1");
+//		Utilities.testCreateBookmark(bookmarkService, "1", (long)30);
+//		Utilities.testRemoveBookmark(bookmarkService, "1", (long)30);
+//		Utilities.testRemoveAlarm(alarmService, (long) 30);
 	}
 }

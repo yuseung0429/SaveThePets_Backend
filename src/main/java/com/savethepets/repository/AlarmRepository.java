@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.savethepets.entity.Alarm;
+import com.savethepets.entity.Post;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class AlarmRepository {
 	
 	public List<Alarm> findByUserId(String userId)
 	{
-		String query = "select a from Alarm a where a.userId = :userId";
+		String query = "select a from Alarm a where a.receiverId = :userId";
 		return em.createQuery(query, Alarm.class).setParameter("userId", userId).getResultList();
 	}
 }

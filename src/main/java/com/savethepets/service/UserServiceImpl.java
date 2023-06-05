@@ -103,68 +103,88 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public List<PostInfoDTO> getMyPosts(String userId) {
 		List<Post> posts = postRepository.findByUserId(userId);
-		List<PostInfoDTO> postInfos = new ArrayList<PostInfoDTO>();
-		for(Post i : posts)
+		if(!posts.isEmpty())
 		{
-			PostPicture temp = postPictureRepository.findOne(new PostPictureId(i.getPostId(), 0));
-			postInfos.add(new PostInfoDTO(i,temp));
+			List<PostInfoDTO> postInfos = new ArrayList<PostInfoDTO>();
+			for(Post i : posts)
+			{
+				PostPicture temp = postPictureRepository.findOne(new PostPictureId(i.getPostId(), 0));
+				postInfos.add(new PostInfoDTO(i,temp));
+			}
+			postInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
+			return postInfos;
 		}
-		postInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
-		return postInfos;
+		else
+			return null;
 	}
 
 	@Override
 	public List<MyCommentInfoDTO> getMyComments(String userId) {
 		List<Comment> comments = commentRepository.findByUserId(userId);
-		List<MyCommentInfoDTO> myCommentInfos = new ArrayList<MyCommentInfoDTO>();
-		for(Comment i : comments)
+		if(!comments.isEmpty())
 		{
-			Post tempPost = postRepository.findOne(i.getPostId());
-			PostPicture tempPostPicture = postPictureRepository.findOne(new PostPictureId(i.getPostId(), 0));
-			myCommentInfos.add(new MyCommentInfoDTO(i,tempPost,tempPostPicture));
+			List<MyCommentInfoDTO> myCommentInfos = new ArrayList<MyCommentInfoDTO>();
+			for(Comment i : comments)
+			{
+				Post tempPost = postRepository.findOne(i.getPostId());
+				PostPicture tempPostPicture = postPictureRepository.findOne(new PostPictureId(i.getPostId(), 0));
+				myCommentInfos.add(new MyCommentInfoDTO(i,tempPost,tempPostPicture));
+			}
+			myCommentInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
+			return myCommentInfos;
 		}
-		myCommentInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
-		return myCommentInfos;
+		else
+			return null;
 	}
 
 	@Override
 	public List<AlarmInfoDTO> getAlarms(String userId) {
 		List<Alarm> alarms = alarmRepository.findByUserId(userId);
-		List<AlarmInfoDTO> alarmInfos = new ArrayList<AlarmInfoDTO>();
-		for(Alarm i : alarms)
+		if(!alarms.isEmpty())
 		{
-			// Alarm type이 Post인 경우
-			if(i.getType() != Alarm.COMMENT)
+			List<AlarmInfoDTO> alarmInfos = new ArrayList<AlarmInfoDTO>();
+			for(Alarm i : alarms)
 			{
-				Post tempPost = postRepository.findOne(i.getPostId());
-				PostPicture tempPostPicture = postPictureRepository.findOne(new PostPictureId(i.getPostId(), 0));
-				alarmInfos.add(new AlarmInfoDTO(i,tempPost,tempPostPicture));
+				// Alarm type이 Post인 경우
+				if(i.getType() != Alarm.COMMENT)
+				{
+					Post tempPost = postRepository.findOne(i.getPostId());
+					PostPicture tempPostPicture = postPictureRepository.findOne(new PostPictureId(i.getPostId(), 0));
+					alarmInfos.add(new AlarmInfoDTO(i,tempPost,tempPostPicture));
+				}
+				// Alarm type이 Comment인 경우
+				else
+				{
+					User tempUser = userRepository.findOne(i.getSenderId());
+					alarmInfos.add(new AlarmInfoDTO(i,tempUser));
+				}
 			}
-			// Alarm type이 Comment인 경우
-			else
-			{
-				User tempUser = userRepository.findOne(i.getSenderId());
-				alarmInfos.add(new AlarmInfoDTO(i,tempUser));
-			}
+			alarmInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
+			return alarmInfos;
 		}
-		alarmInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
-		return alarmInfos;
+		else
+			return null;
 	}
 
 	@Override
 	public List<PostInfoDTO> getBookmarks(String userId) {
 		List<Bookmark> bookmarks = bookmarkRepository.findByUserId(userId);
-		List<PostInfoDTO> postInfos = new ArrayList<PostInfoDTO>();
-		for(Bookmark i : bookmarks)
+		if(!bookmarks.isEmpty())
 		{
-			Post tempPost = postRepository.findOne(i.getBookmarkId().getPostId());
-			PostPicture tempPostPicture = postPictureRepository.findOne(new PostPictureId(tempPost.getPostId(), 0));
-			PostInfoDTO tempPostInfo = new PostInfoDTO(tempPost, tempPostPicture);
-			tempPostInfo.setTimestamp(i.getTimestamp());
-			postInfos.add(tempPostInfo);
+			List<PostInfoDTO> postInfos = new ArrayList<PostInfoDTO>();
+			for(Bookmark i : bookmarks)
+			{
+				Post tempPost = postRepository.findOne(i.getBookmarkId().getPostId());
+				PostPicture tempPostPicture = postPictureRepository.findOne(new PostPictureId(tempPost.getPostId(), 0));
+				PostInfoDTO tempPostInfo = new PostInfoDTO(tempPost, tempPostPicture);
+				tempPostInfo.setTimestamp(i.getTimestamp());
+				postInfos.add(tempPostInfo);
+			}
+			postInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
+			return postInfos;
 		}
-		postInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
-		return postInfos;
+		else
+			return null;
 	}
 	
 	public void registerUser(String userId, String nickname, byte[] picture)
