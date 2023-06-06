@@ -1,7 +1,9 @@
 package com.savethepets.controller;
 
+import com.savethepets.entity.Post;
 import com.savethepets.service.PostServiceImpl;
 
+import com.savethepets.utility.Utilities;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,14 +29,33 @@ import com.savethepets.dto.*;
 @RequestMapping(value = "/post")
 @RequiredArgsConstructor
 public class PostController {
-	//private final PostServiceImpl postService;
-	
+	private final PostServiceImpl postService;
+
 	@PostMapping()
-	ResponseEntity<Boolean> createPost(@RequestBody CreatePostDTO createPostDTO) {return new ResponseEntity<>(HttpStatus.OK);};
+	ResponseEntity<Long> createPost(@RequestHeader("token") String token, @RequestBody CreatePostDTO createPostDTO) {
+		String userId;
+		if((userId = Utilities.verifiy(token)) != null){
+			List<byte[]> pictures = createPostDTO.getPictures();
+			Post post = new Post(userId, createPostDTO.getContent(),createPostDTO.getSpecies(),createPostDTO.getBreed(),createPostDTO.getType(),createPostDTO.getLot(),createPostDTO.getLat(),createPostDTO.getTime());
+			Long postId = postService.createPost(post,pictures);
+			return new ResponseEntity<>(postId, HttpStatus.OK);
+		}
+		else
+			return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+	};
 
 	@DeleteMapping()
-	ResponseEntity<Boolean> removePost(@RequestBody Long postId) {return new ResponseEntity<>(HttpStatus.OK);};
-
+	ResponseEntity<Boolean> removePost(@RequestHeader("token") String token, @RequestBody Long postId) {
+		String userId;
+		if((userId = Utilities.verifiy(token)) != null)
+			// DB에 recode 삭제가 성공한 경우
+			if(postService.removePost(postId)==true)
+				return new ResponseEntity<>(true, HttpStatus.OK);
+				// DB에 recode 삭제가 실패한 경우 (Id에 해당하는 record가 없는 경우)
+			else
+				return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+	};
 	@PutMapping()
 	ResponseEntity<Boolean> updatePost(@RequestBody UpdatePostDTO updatePostDTO) {return new ResponseEntity<>(HttpStatus.OK);};
 	

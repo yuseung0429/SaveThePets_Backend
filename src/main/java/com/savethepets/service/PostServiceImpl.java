@@ -28,6 +28,7 @@ public class PostServiceImpl implements PostService{
     public Long createPost(Post post, List<byte[]> pictures){
         Long postId = postRepository.create(post); // Post 저장하여 postId 생성
         if(pictures!=null){
+            //PostPicture에 게시글 사진 저장
             for(int i = 0; i< pictures.size(); i++) {
                 postPictureRepository.save(new PostPicture(new PostPictureId(postId, i), pictures.get(i)));
             }
@@ -37,16 +38,16 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public boolean removePost(Long postId) {
-        try {
-            Post post = postRepository.findOne(postId);
-            if (post != null) {
-                postRepository.remove(post);
-                return true;
-            }
-        } catch (Exception e) {
-
+        Post post;
+        // DB에 postId에 해당하는 record가 있는 경우
+        if((post = postRepository.findOne(postId))!=null)
+        {
+            postRepository.remove(post);
+            return true;
         }
-        return false;
+        // DB에 postId에 해당하는 record가 없는 경우
+        else
+            return false;
     }
 
     @Override
