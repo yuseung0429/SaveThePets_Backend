@@ -11,9 +11,12 @@ import com.savethepets.repository.PostPictureRepository;
 import com.savethepets.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService{
 
@@ -22,18 +25,14 @@ public class PostServiceImpl implements PostService{
 
 
     @Override
-    public boolean createPost(Post post, List<byte[]> pictures){
-        try{
-            Long postId = postRepository.create(post); // Post 저장하여 postId 생성
-            if(pictures!=null){
-                for(int i = 0; i< pictures.size(); i++) {
-                    postPictureRepository.save(new PostPicture(new PostPictureId(postId, i), pictures.get(i)));
-                }
+    public Long createPost(Post post, List<byte[]> pictures){
+        Long postId = postRepository.create(post); // Post 저장하여 postId 생성
+        if(pictures!=null){
+            for(int i = 0; i< pictures.size(); i++) {
+                postPictureRepository.save(new PostPicture(new PostPictureId(postId, i), pictures.get(i)));
             }
-            return true;
-        }catch (Exception e){
-            return false;
         }
+        return postId;
     }
 
     @Override

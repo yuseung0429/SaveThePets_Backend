@@ -33,4 +33,17 @@ public class Post {
 
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<PostPicture> pictures;
+
+	public Post(String userId, String content, int species, int breed, int type, Double lot, Double lat, LocalDateTime time) {
+		this.userId = userId;
+		this.content=content;
+		this.species=species;
+		this.breed=breed;
+		this.type=type;
+		this.lat=lat;
+		this.lot=lot;
+		this.time=time;
+		this.timestamp=LocalDateTime.now();
+	}
+
 }
