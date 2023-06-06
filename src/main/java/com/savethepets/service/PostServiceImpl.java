@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -84,8 +85,15 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<PostInfoDTO> getBoardPosts(int start, int end) {
-        return null;
+    public List<PostInfoDTO> getBoardPosts() {
+        List<Post> posts = postRepository.findAllPosts(); // 모든 게시물 가져오기
+        List<PostInfoDTO> postInfos = new ArrayList<PostInfoDTO>();
+        for(Post i : posts) {
+            PostPicture temp = postPictureRepository.findOne(new PostPictureId(i.getPostId(), 0));
+            postInfos.add(new PostInfoDTO(i,temp));
+        }
+        postInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
+        return postInfos;
     }
 
     @Override
@@ -103,10 +111,19 @@ public class PostServiceImpl implements PostService{
         return null;
     }
 
+
     @Override
     public List<PostInfoDTO> getMyLostPosts(String userId) {
-        return null;
+        List<Post> lostPosts = postRepository.findLostPostsByUserId(userId); // 사용자의 분실 게시물 가져오기
+        List<PostInfoDTO> postInfos = new ArrayList<PostInfoDTO>();
+        for(Post i : lostPosts) {
+            PostPicture temp = postPictureRepository.findOne(new PostPictureId(i.getPostId(), 0));
+            postInfos.add(new PostInfoDTO(i,temp));
+        }
+        postInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
+        return postInfos;
     }
+
 
     @Override
     public AnalyzedPictureDTO analyzePictures(List<byte[]> pictures) {

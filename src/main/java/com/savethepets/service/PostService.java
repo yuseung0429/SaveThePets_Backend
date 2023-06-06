@@ -10,7 +10,7 @@ public interface PostService {
     Long createPost(Post post, List<byte[]> pictures);
     boolean removePost(Long postId);
     boolean updatePost(UpdatePostDTO updatePostDTO);
-    List<PostInfoDTO> getBoardPosts(int start, int end);
+    List<PostInfoDTO> getBoardPosts();
     List<PostInfoDTO> getMapPosts(Double userLat, Double userLot);
     List<PostInfoDTO> getFilteredPosts(FilterDTO filter);
     PostDetailedInfoDTO getPostDetail(Long postId);

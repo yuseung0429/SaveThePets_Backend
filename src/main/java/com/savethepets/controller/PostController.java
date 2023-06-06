@@ -71,8 +71,11 @@ public class PostController {
 		return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
 	};
 
-	@GetMapping("/list/{number}")
-	ResponseEntity<List<PostInfoDTO>> getBoardPosts(@PathVariable Long number) {return new ResponseEntity<>(HttpStatus.OK);};
+	@GetMapping("/list")
+	ResponseEntity<List<PostInfoDTO>> getBoardPosts() {
+		List<PostInfoDTO> posts = postService.getBoardPosts();
+		return new ResponseEntity<>(posts, HttpStatus.OK);
+	}
 	
 	@GetMapping("/map")
 	ResponseEntity<List<PostInfoDTO>> getMapPosts(@ModelAttribute DistancePostDTO distancePostDTO) {return new ResponseEntity<>(HttpStatus.OK);};
@@ -82,9 +85,20 @@ public class PostController {
 	
 	@GetMapping("/{postId}")
 	ResponseEntity<PostDetailedInfoDTO> getPostDetail(@PathVariable Long postId) {return new ResponseEntity<>(HttpStatus.OK);};
-	
+
 	@GetMapping("/mylost")
-	ResponseEntity<List<PostInfoDTO>> getMyLostPosts(@RequestHeader("token") String token) {return new ResponseEntity<>(HttpStatus.OK);};
+	ResponseEntity<List<PostInfoDTO>> getMyLostPosts(@RequestHeader("token") String token) {
+		String userId;
+		List<PostInfoDTO> posts;
+		if((userId = Utilities.verifiy(token)) != null)
+			// DB에서 recode를 읽기 성공한 경우
+			if((posts = postService.getMyLostPosts(userId))!=null)
+				return new ResponseEntity<>(posts, HttpStatus.OK);
+				// DB에서 recode를 읽기 실패한 경우
+			else
+				return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+	};
 	
 	@PostMapping("/analyze")
 	ResponseEntity<AnalyzedPictureDTO> analyzePictures(@RequestBody List<Byte[]> pictures) {return new ResponseEntity<>(HttpStatus.OK);};

@@ -2,6 +2,7 @@ package com.savethepets.repository;
 
 import java.util.List;
 
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 
 import com.savethepets.entity.Post;
@@ -44,5 +45,17 @@ public class PostRepository {
 	public List<Post> findByUserId(String userId){
 		String query = "select p from Post p where userId = :userId";
 		return em.createQuery(query, Post.class).setParameter("userId", userId).getResultList();
+	}
+
+	public List<Post> findAllPosts() {
+		String query = "SELECT p FROM Post p";
+		return em.createQuery(query, Post.class)
+				.getResultList();
+	}
+	public List<Post> findLostPostsByUserId(String userId) {
+		String query = "SELECT p FROM Post p WHERE p.userId = :userId AND p.type = 0 ";
+		return em.createQuery(query, Post.class)
+				.setParameter("userId", userId)
+				.getResultList();
 	}
 }
