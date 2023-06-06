@@ -1,9 +1,6 @@
 package com.savethepets.service;
 
-import com.savethepets.dto.AnalyzedPictureDTO;
-import com.savethepets.dto.FilterDTO;
-import com.savethepets.dto.PostDetailedInfoDTO;
-import com.savethepets.dto.PostInfoDTO;
+import com.savethepets.dto.*;
 import com.savethepets.entity.Post;
 import com.savethepets.entity.PostPicture;
 import com.savethepets.id.PostPictureId;
@@ -51,41 +48,39 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public boolean updatePost(Post post, List<byte[]> pictures) {
-        Post existingPost = postRepository.findOne(post.getPostId());
-        if(existingPost != null){
-            existingPost.setContent(post.getContent());
-            existingPost.setSpecies(post.getSpecies());
-            existingPost.setBreed(post.getBreed());
-            existingPost.setType(post.getType());
+    public boolean updatePost(UpdatePostDTO updatePostDTO) {
+        Post existingPost = postRepository.findOne(updatePostDTO.getPostId());
+        if(existingPost != null) {
+            existingPost.setContent(updatePostDTO.getContent());
+            existingPost.setSpecies(updatePostDTO.getSpecies());
+            existingPost.setBreed(updatePostDTO.getBreed());
+            existingPost.setType(updatePostDTO.getType());
 //            existingPost.setSpeciesAi(post.getSpeciesAi());
 //            existingPost.setBreedAi(post.getBreedAi());
 //            existingPost.setAccuracy(post.getAccuracy());
-            existingPost.setLat(post.getLat());
-            existingPost.setLot(post.getLot());
-            existingPost.setTime(post.getTime());
-            try{
-                postRepository.save(existingPost);
-                // 기존에 첨부된 사진 삭제
-                List<PostPicture> existingPictures = postPictureRepository.findByPostId(post.getPostId());
-                if (existingPictures != null) {
-                    for (PostPicture picture : existingPictures) {
-                        postPictureRepository.remove(picture);
-                    }
+            existingPost.setLat(updatePostDTO.getPostLat());
+            existingPost.setLot(updatePostDTO.getPostLot());
+            existingPost.setTime(updatePostDTO.getTime());
+
+            postRepository.save(existingPost);
+
+            // 기존에 첨부된 사진 삭제
+            List<PostPicture> existingPictures = postPictureRepository.findByPostId(updatePostDTO.getPostId());
+            if (existingPictures != null) {
+                for (PostPicture picture : existingPictures) {
+                    postPictureRepository.remove(picture);
                 }
-                // 사진 다시 등록
-                if(pictures!=null){
-                    for(int i = 0; i< pictures.size(); i++) {
-                        postPictureRepository.save(new PostPicture(new PostPictureId(post.getPostId(), i), pictures.get(i)));
-                    }
-                }
-                return true;
-            }catch (Exception e){
-                return false;
             }
-        }else{
-            return false;
+            // 사진 다시 등록
+            List<byte[]> pictures = updatePostDTO.getPictures();
+            if (pictures != null) {
+                for (int i = 0; i < pictures.size(); i++) {
+                    postPictureRepository.save(new PostPicture(new PostPictureId(updatePostDTO.getPostId(), i), pictures.get(i)));
+                }
+            }
+            return true;
         }
+        return false;
     }
 
     @Override

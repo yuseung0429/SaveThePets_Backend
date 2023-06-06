@@ -57,8 +57,20 @@ public class PostController {
 		return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
 	};
 	@PutMapping()
-	ResponseEntity<Boolean> updatePost(@RequestBody UpdatePostDTO updatePostDTO) {return new ResponseEntity<>(HttpStatus.OK);};
-	
+	ResponseEntity<Boolean> updatePost(@RequestHeader("token") String token, @RequestBody UpdatePostDTO updatePostDTO) {
+		String userId;
+		if((userId = Utilities.verifiy(token)) != null)
+		{
+			// DB에 recode 수정 성공한 경우
+			if(postService.updatePost(updatePostDTO)==true)
+				return new ResponseEntity<>(true, HttpStatus.OK);
+				// DB에 recode 수정 실패한 경우 (postId에 해당하는 record가 없는 경우)
+			else
+				return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+	};
+
 	@GetMapping("/list/{number}")
 	ResponseEntity<List<PostInfoDTO>> getBoardPosts(@PathVariable Long number) {return new ResponseEntity<>(HttpStatus.OK);};
 	
