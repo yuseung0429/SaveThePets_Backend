@@ -26,17 +26,6 @@ import com.savethepets.dto.*;
 public class UserController {
 	private final UserServiceImpl userService;
 	
-	@GetMapping("/signup")
-	ResponseEntity<TokenInfoDTO> signup(@RequestBody String kakaoToken) {
-		TokenInfoDTO temp;
-		// DB에 recode 삽입이 성공한 경우
-		if((temp = userService.signup(kakaoToken)) != null)
-			return new ResponseEntity<>(temp, HttpStatus.OK);
-		// DB에 recode 삽입이 실패한 경우 (Id에 해당하는 record가 이미 있는 경우)
-		else
-			return new ResponseEntity<>(null, HttpStatus.CONFLICT);
-	};
-	
 	@GetMapping("/leaveid")
 	ResponseEntity<Boolean> leaveId(@RequestHeader("token") String token) {
 		String userId;

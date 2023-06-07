@@ -13,6 +13,7 @@ import com.savethepets.entity.Report;
 import com.savethepets.id.BookmarkId;
 import com.savethepets.id.ReportId;
 import com.savethepets.service.AlarmService;
+import com.savethepets.service.AuthService;
 import com.savethepets.service.BookmarkService;
 import com.savethepets.service.ReportService;
 import com.savethepets.service.UserService;
@@ -293,6 +294,42 @@ public class Utilities {
 			System.out.println("\t결과 : 삭제 실패");
 		System.out.println("------------------------------");
 	}
+	
+	public static String testGenerateToken(AuthService authService, String userId) 
+	{
+		String token;
+		System.out.println("------------------------------");
+		System.out.println("■ 토큰 생성");
+		if((token = authService.generateToken(userId)) != null)
+		{
+			System.out.println("\t결과 : 생성 성공");
+			System.out.println("\t토큰 : "+ token);
+			System.out.println("------------------------------");
+			return token;
+		}
+		else
+		{
+			System.out.println("\t결과 : 생성 실패");
+			System.out.println("------------------------------");
+			return null;
+		}
+	}
+	
+	public static void testvalidateToken(AuthService authService, String token) 
+	{
+		String userId;
+		System.out.println("------------------------------");
+		System.out.println("■ 토큰 검증");
+		if((userId = authService.validateToken(token)) != null)
+		{
+			System.out.println("\t결과 : 인증 성공");
+			System.out.println("\t계정 : "+ userId);
+		}
+		else
+			System.out.println("\t결과 : 인증 실패");
+		System.out.println("------------------------------");
+	}
+	
 
 	public static String getPostType(int type)
 	{
