@@ -15,12 +15,12 @@ import lombok.RequiredArgsConstructor;
 public class AlarmRepository {
 	private final EntityManager em;
 	
-	public void save(Alarm alarmId) {
-		em.persist(alarmId);
+	public void save(Alarm alarm) {
+		em.persist(alarm);
 	}
 	
-	public void remove(Alarm alarmId) {
-		em.remove(alarmId);
+	public void remove(Alarm alarm) {
+		em.remove(alarm);
 	}
 	
 	public Alarm findOne(Long alarmId) {

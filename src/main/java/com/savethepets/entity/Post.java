@@ -32,6 +32,9 @@ public class Post {
 	LocalDateTime time;
 
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Comment> comments;
+
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<PostPicture> pictures;
 
 	public Post(String userId, String content, int species, int breed, int type, Double lot, Double lat, LocalDateTime time) {

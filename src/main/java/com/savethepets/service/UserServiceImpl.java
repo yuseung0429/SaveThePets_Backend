@@ -126,8 +126,8 @@ public class UserServiceImpl implements UserService{
 			List<MyCommentInfoDTO> myCommentInfos = new ArrayList<MyCommentInfoDTO>();
 			for(Comment i : comments)
 			{
-				Post tempPost = postRepository.findOne(i.getPostId());
-				PostPicture tempPostPicture = postPictureRepository.findOne(new PostPictureId(i.getPostId(), 0));
+				Post tempPost = postRepository.findOne(i.getPost().getPostId());
+				PostPicture tempPostPicture = postPictureRepository.findOne(new PostPictureId(i.getPost().getPostId(), 0));
 				myCommentInfos.add(new MyCommentInfoDTO(i,tempPost,tempPostPicture));
 			}
 			myCommentInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));

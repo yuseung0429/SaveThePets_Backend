@@ -30,7 +30,7 @@ public class CommentRepository {
 	}
 	public List<Comment> findByPostId(Long postId)
 	{
-		String query = "select c from Comment c where c.postId = :postId";
+		String query = "select c from Comment c where c.post.postId = :postId";
 		return em.createQuery(query, Comment.class).setParameter("postId", postId).getResultList();
 	}
 }
