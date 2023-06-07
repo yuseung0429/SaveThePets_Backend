@@ -40,9 +40,12 @@ public class AuthServiceImpl implements AuthService{
 		
 		String accessToken = getAccessToken(code);
 		String kakaoAccount = getKakaoAccount(accessToken);
-		User user = new User();
-		user.setUserId(kakaoAccount);
-		userRepository.save(user);
+		if(userRepository.findOne(kakaoAccount) == null)
+		{
+			User user = new User();
+			user.setUserId(kakaoAccount);
+			userRepository.save(user);
+		}
 		String token = generateToken(kakaoAccount);
 		return new TokenInfoDTO(token, validateToken(token) != null ? true : false);
 	}
@@ -77,7 +80,7 @@ public class AuthServiceImpl implements AuthService{
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("grant_type", "authorization_code");
-        params.add("client_id", "{888ae80006297d9788f3792efe410a57}");
+        params.add("client_id", "888ae80006297d9788f3792efe410a57");
         params.add("redirect_uri", "http://localhost:3000/oauth/kakao");
         params.add("code", code);
 
@@ -89,7 +92,7 @@ public class AuthServiceImpl implements AuthService{
         JSONObject data = new JSONObject(response.getBody());
         return data.getString("access_token");
 	}
-	
+    
 	private String getKakaoAccount(String accessToken)
 	{
 		HttpHeaders headers = new HttpHeaders();
