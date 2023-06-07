@@ -79,10 +79,13 @@ public class PostController {
 	
 	@GetMapping("/map")
 	ResponseEntity<List<PostInfoDTO>> getMapPosts(@ModelAttribute DistancePostDTO distancePostDTO) {return new ResponseEntity<>(HttpStatus.OK);};
-	
+
 	@GetMapping("/filtered")
-	ResponseEntity<List<PostInfoDTO>> getFilteredPosts(@ModelAttribute FilterDTO filterDTO) {return new ResponseEntity<>(HttpStatus.OK);};
-	
+	ResponseEntity<List<PostInfoDTO>> getFilteredPosts(@ModelAttribute FilterDTO filterDTO) {
+		List<PostInfoDTO> posts = postService.getFilteredPosts(filterDTO);
+		return new ResponseEntity<>(posts, HttpStatus.OK);
+	};
+
 	@GetMapping("/{postId}")
 	ResponseEntity<PostDetailedInfoDTO> getPostDetail(@PathVariable Long postId) {return new ResponseEntity<>(HttpStatus.OK);};
 

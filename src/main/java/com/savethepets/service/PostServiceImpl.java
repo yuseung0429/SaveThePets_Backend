@@ -102,8 +102,14 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<PostInfoDTO> getFilteredPosts(FilterDTO filter) {
-        return null;
+    public List<PostInfoDTO> getFilteredPosts(FilterDTO filterDTO) {
+        List<Post> filteredPosts = postRepository.findFilteredPosts(filterDTO);//  필터링된 게시물 가져오기
+        List<PostInfoDTO> postInfos = new ArrayList<PostInfoDTO>();
+        for(Post i : filteredPosts) {
+            PostPicture temp = postPictureRepository.findOne(new PostPictureId(i.getPostId(), 0));
+            postInfos.add(new PostInfoDTO(i,temp));
+        }
+        return postInfos;
     }
 
     @Override
