@@ -6,5 +6,4 @@ public interface AuthService {
 	TokenInfoDTO kakaoLogin(String code);
 	String generateToken(String userId);
 	String validateToken(String token);
-
 }

@@ -28,7 +28,7 @@ public class Utilities {
 		else
 			return null;
 	}
-	
+
 	public static void testGetUserInfo(UserService userService, String userId)
 	{
 		UserInfoDTO temp = userService.getUserInfo(userId);
