@@ -1,5 +1,6 @@
 package com.savethepets.controller;
 
+import com.savethepets.service.AuthServiceImpl;
 import com.savethepets.service.UserServiceImpl;
 import com.savethepets.utility.Utilities;
 
@@ -24,14 +25,16 @@ import com.savethepets.dto.*;
 @RestController
 @RequestMapping(value = "/user")
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 	private final UserServiceImpl userService;
+	private final AuthServiceImpl authService;
 	
 	@GetMapping("/leaveid")
 	ResponseEntity<Boolean> leaveId(@RequestHeader("token") String token) {
 		String userId;
-		if((userId= Utilities.verifiy(token))!=null)
+		
+		if((userId= authService.validateToken(token))!=null)
 			// DB에서 recode를 삭제 성공한 경우
 			if(userService.leaveId(userId)==true)
 				return new ResponseEntity<>(true, HttpStatus.OK);
@@ -44,7 +47,7 @@ public class UserController {
 	@PutMapping("/update-nickname")
 	ResponseEntity<Boolean> updateNickname(@RequestHeader("token") String token, @RequestBody String nickname) {
 		String userId;
-		if((userId= Utilities.verifiy(token))!=null)
+		if((userId= authService.validateToken(token))!=null)
 			// DB에서 recode를 갱신 성공한 경우
 			if(userService.updateNickname(userId, nickname)==true)
 				return new ResponseEntity<>(true, HttpStatus.OK);
@@ -57,7 +60,7 @@ public class UserController {
 	@PutMapping("/update-picture")
 	ResponseEntity<Boolean> updatePicture(@RequestHeader("token") String token, @RequestBody byte[] picture) {
 		String userId;
-		if((userId= Utilities.verifiy(token))!=null)
+		if((userId= authService.validateToken(token))!=null)
 			// DB에서 recode를 갱신 성공한 경우
 			if(userService.updatePicture(userId, picture)==true)
 				return new ResponseEntity<>(true, HttpStatus.OK);
@@ -71,7 +74,7 @@ public class UserController {
 	ResponseEntity<UserInfoDTO> getUserInfo(@RequestHeader("token") String token) {
 		String userId;
 		UserInfoDTO temp;
-		if((userId = Utilities.verifiy(token)) != null)
+		if((userId = authService.validateToken(token)) != null)
 			// DB에서 recode를 읽기 성공한 경우
 			if((temp = userService.getUserInfo(userId))!=null)
 				return new ResponseEntity<>(temp, HttpStatus.OK);
@@ -85,7 +88,7 @@ public class UserController {
 	ResponseEntity<List<PostInfoDTO>> getMyPosts(@RequestHeader("token") String token) {
 		String userId;
 		List<PostInfoDTO> temp;
-		if((userId = Utilities.verifiy(token)) != null)
+		if((userId = authService.validateToken(token)) != null)
 			// DB에서 recode를 읽기 성공한 경우
 			if((temp = userService.getMyPosts(userId))!=null)
 				return new ResponseEntity<>(temp, HttpStatus.OK);
@@ -99,7 +102,7 @@ public class UserController {
 	ResponseEntity<List<MyCommentInfoDTO>> getMyComments(@RequestHeader("token") String token){
 		String userId;
 		List<MyCommentInfoDTO> temp;
-		if((userId = Utilities.verifiy(token)) != null)
+		if((userId = authService.validateToken(token)) != null)
 			// DB에서 recode를 읽기 성공한 경우
 			if((temp = userService.getMyComments(userId))!=null)
 				return new ResponseEntity<>(temp, HttpStatus.OK);
@@ -113,7 +116,7 @@ public class UserController {
 	ResponseEntity<List<AlarmInfoDTO>> getAlarms(@RequestHeader("token") String token){
 		String userId;
 		List<AlarmInfoDTO> temp;
-		if((userId = Utilities.verifiy(token)) != null)
+		if((userId = authService.validateToken(token)) != null)
 			// DB에서 recode를 읽기 성공한 경우
 			if((temp = userService.getAlarms(userId))!=null)
 				return new ResponseEntity<>(temp, HttpStatus.OK);
@@ -127,7 +130,7 @@ public class UserController {
 	ResponseEntity<List<PostInfoDTO>> getBookmarks(@RequestHeader("token") String token){
 		String userId;
 		List<PostInfoDTO> temp;
-		if((userId = Utilities.verifiy(token)) != null)
+		if((userId = authService.validateToken(token)) != null)
 			// DB에서 recode를 읽기 성공한 경우
 			if((temp = userService.getBookmarks(userId))!=null)
 				return new ResponseEntity<>(temp, HttpStatus.OK);

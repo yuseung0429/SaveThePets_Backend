@@ -1,6 +1,7 @@
 package com.savethepets.controller;
 
 import com.savethepets.entity.Post;
+import com.savethepets.service.AuthServiceImpl;
 import com.savethepets.service.PostServiceImpl;
 
 import com.savethepets.utility.Utilities;
@@ -11,6 +12,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,13 +30,15 @@ import com.savethepets.dto.*;
 @RestController
 @RequestMapping(value = "/post")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class PostController {
 	private final PostServiceImpl postService;
+	private final AuthServiceImpl authService;
 
 	@PostMapping()
 	ResponseEntity<Long> createPost(@RequestHeader("token") String token, @RequestBody CreatePostDTO createPostDTO) {
 		String userId;
-		if((userId = Utilities.verifiy(token)) != null){
+		if((userId = authService.validateToken(token)) != null){
 			List<byte[]> pictures = createPostDTO.getPictures();
 			Post post = new Post(userId, createPostDTO.getContent(),createPostDTO.getSpecies(),createPostDTO.getBreed(),createPostDTO.getType(),createPostDTO.getLot(),createPostDTO.getLat(),createPostDTO.getTime());
 			Long postId = postService.createPost(post,pictures);
@@ -47,7 +51,7 @@ public class PostController {
 	@DeleteMapping()
 	ResponseEntity<Boolean> removePost(@RequestHeader("token") String token, @RequestBody Long postId) {
 		String userId;
-		if((userId = Utilities.verifiy(token)) != null)
+		if((userId = authService.validateToken(token)) != null)
 			// DB에 recode 삭제가 성공한 경우
 			if(postService.removePost(postId)==true)
 				return new ResponseEntity<>(true, HttpStatus.OK);
@@ -59,7 +63,7 @@ public class PostController {
 	@PutMapping()
 	ResponseEntity<Boolean> updatePost(@RequestHeader("token") String token, @RequestBody UpdatePostDTO updatePostDTO) {
 		String userId;
-		if((userId = Utilities.verifiy(token)) != null)
+		if((userId = authService.validateToken(token)) != null)
 		{
 			// DB에 recode 수정 성공한 경우
 			if(postService.updatePost(updatePostDTO)==true)
@@ -93,7 +97,7 @@ public class PostController {
 	ResponseEntity<List<PostInfoDTO>> getMyLostPosts(@RequestHeader("token") String token) {
 		String userId;
 		List<PostInfoDTO> posts;
-		if((userId = Utilities.verifiy(token)) != null)
+		if((userId = authService.validateToken(token)) != null)
 			// DB에서 recode를 읽기 성공한 경우
 			if((posts = postService.getMyLostPosts(userId))!=null)
 				return new ResponseEntity<>(posts, HttpStatus.OK);

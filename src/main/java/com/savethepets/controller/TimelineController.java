@@ -19,7 +19,7 @@ import com.savethepets.dto.*;
 @RestController
 @RequestMapping(value = "/timeline")
 @RequiredArgsConstructor
-
+@CrossOrigin(origins = "http://localhost:3000")
 public class TimelineController {
 	private final TimelineServiceImpl timelineService;
 	
