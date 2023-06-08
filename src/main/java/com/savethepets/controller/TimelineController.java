@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,7 @@ import com.savethepets.dto.*;
 @RestController
 @RequestMapping(value = "/timeline")
 @RequiredArgsConstructor
-
+@CrossOrigin(origins = "http://localhost:3000")
 public class TimelineController {
 	//private final TimelineServiceImpl timelineService;
 	
