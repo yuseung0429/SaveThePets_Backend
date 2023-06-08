@@ -186,20 +186,4 @@ public class UserServiceImpl implements UserService{
 		else
 			return null;
 	}
-	
-	public void registerUser(String userId, String nickname, byte[] picture)
-	{
-		User temp1 = userRepository.findOne(userId);
-		List<User> temp2 = userRepository.findByNickname(nickname);
-		if (temp1 == null && temp2 == null)
-		{
-			if(picture == null)
-			{
-				byte[] bytes = {0x01};
-				userRepository.save(new User(userId, nickname, bytes));
-			}
-			else
-				userRepository.save(new User(userId, nickname, picture));
-		}
-	}
 }

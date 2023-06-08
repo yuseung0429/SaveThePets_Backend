@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.util.ByteArrayBuilder;
 import com.savethepets.dto.*;
 
 @Slf4j
@@ -45,11 +47,11 @@ public class UserController {
 	};
 	
 	@PutMapping("/update-nickname")
-	ResponseEntity<Boolean> updateNickname(@RequestHeader("token") String token, @RequestBody String nickname) {
+	ResponseEntity<Boolean> updateNickname(@RequestHeader("token") String token, @RequestBody() Map<String, String> json) {
 		String userId;
 		if((userId= authService.validateToken(token))!=null)
 			// DB에서 recode를 갱신 성공한 경우
-			if(userService.updateNickname(userId, nickname)==true)
+			if(userService.updateNickname(userId, json.get("nickname"))==true)
 				return new ResponseEntity<>(true, HttpStatus.OK);
 			// DB에서 recode를 갱신 실패한 경우
 			else
@@ -58,11 +60,11 @@ public class UserController {
 	};
 	
 	@PutMapping("/update-picture")
-	ResponseEntity<Boolean> updatePicture(@RequestHeader("token") String token, @RequestBody byte[] picture) {
+	ResponseEntity<Boolean> updatePicture(@RequestHeader("token") String token, @RequestBody() Map<String, String> json) {
 		String userId;
 		if((userId= authService.validateToken(token))!=null)
 			// DB에서 recode를 갱신 성공한 경우
-			if(userService.updatePicture(userId, picture)==true)
+			if(userService.updatePicture(userId, json.get("picture").getBytes())==true)
 				return new ResponseEntity<>(true, HttpStatus.OK);
 			// DB에서 recode를 갱신 실패한 경우
 			else
