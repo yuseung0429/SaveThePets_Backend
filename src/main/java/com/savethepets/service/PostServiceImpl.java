@@ -1,17 +1,17 @@
 package com.savethepets.service;
 
 import com.savethepets.dto.*;
-import com.savethepets.entity.Post;
-import com.savethepets.entity.PostPicture;
+import com.savethepets.entity.*;
+import com.savethepets.id.BookmarkId;
 import com.savethepets.id.PostPictureId;
-import com.savethepets.repository.PostPictureRepository;
-import com.savethepets.repository.PostRepository;
+import com.savethepets.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -20,7 +20,10 @@ public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
     private final PostPictureRepository postPictureRepository;
-
+    private final CommentRepository commentRepository;
+    private final TimelineRepository timelineRepository;
+    private final BookmarkRepository bookmarkRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Long createPost(Post post, List<byte[]> pictures){
@@ -114,7 +117,39 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public PostDetailedInfoDTO getPostDetail(Long postId) {
-        return null;
+        Post post = postRepository.findOne(postId);
+        if(post != null){
+            //북마크 정보 넣기
+            BookmarkId bookmarkId = new BookmarkId(post.getUserId(),postId);
+            Bookmark bookmark = bookmarkRepository.findOne(bookmarkId);
+            boolean bookmarked = (bookmark!=null);
+            //게시물 사진들 넣기
+            List<PostPicture> postPictures = postPictureRepository.findByPostId(postId);
+            //게시물 댓글 넣기
+            List<Comment> comments = commentRepository.findByPostId(postId);
+            List<CommentInfoDTO> commentInfoDTOs = new ArrayList<>();
+            for(Comment comment : comments){
+                String userId = comment.getUserId();
+                User user = userRepository.findOne(userId);
+                CommentInfoDTO commentInfoDTO = new CommentInfoDTO(comment,user);
+                commentInfoDTOs.add(commentInfoDTO);
+            }
+            //게시물 타임라인 넣기
+            List<Timeline> timelines = timelineRepository.findByMissingPostId(postId);
+            List<TimelineInfoDTO> timelineInfoDTOs = new ArrayList<>();
+            for(Timeline timeline : timelines){
+                Post sightingpost = postRepository.findOne(timeline.getTimelineId().getSightingPostId());
+                PostPictureId postPictureId = new PostPictureId(timeline.getTimelineId().getSightingPostId(),0);
+                byte[] thumbnail = postPictureRepository.findOne(postPictureId).getPicture();
+                TimelineInfoDTO timelineInfoDTO = new TimelineInfoDTO(sightingpost,thumbnail);
+                timelineInfoDTOs.add(timelineInfoDTO);
+            }
+            PostDetailedInfoDTO postDetailedInfoDTO = new PostDetailedInfoDTO(post, postPictures, bookmarked, commentInfoDTOs, timelineInfoDTOs);
+
+            return postDetailedInfoDTO;
+        }else{
+            return null;
+        }
     }
 
 
