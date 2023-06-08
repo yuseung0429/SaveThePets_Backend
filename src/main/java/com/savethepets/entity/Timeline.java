@@ -18,5 +18,5 @@ import lombok.Setter;
 @Table(name="TIMELINES")
 public class Timeline {
 	@EmbeddedId
-	TimelineId timelindId;
+	TimelineId timelineId;
 }
