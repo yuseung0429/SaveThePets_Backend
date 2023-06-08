@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,11 +32,11 @@ public class BookmarkController {
 	private final AuthServiceImpl authService;
 	
 	@PostMapping()
-	ResponseEntity<Boolean> createBookmark(@RequestHeader("token") String token, @RequestBody Long postId) {
+	ResponseEntity<Boolean> createBookmark(@RequestHeader("token") String token, @RequestBody Map<String, Long> json) {
 		String userId;
 		if((userId = authService.validateToken(token)) != null)
 			// DB에 recode 삽입이 성공한 경우
-			if(bookmarkService.createBookmark(new Bookmark(new BookmarkId(userId, postId),LocalDateTime.now()))==true)
+			if(bookmarkService.createBookmark(new Bookmark(new BookmarkId(userId, json.get("postId")),LocalDateTime.now()))==true)
 				return new ResponseEntity<>(true, HttpStatus.OK);
 			// DB에 recode 삽입이 실패한 경우 (Id에 해당하는 record가 이미 있는 경우)
 			else
@@ -44,11 +45,11 @@ public class BookmarkController {
 	};
 	
 	@DeleteMapping()
-	ResponseEntity<Boolean> removeBookmark(@RequestHeader("token") String token, @RequestBody Long postId){
+	ResponseEntity<Boolean> removeBookmark(@RequestHeader("token") String token, @RequestBody Map<String, Long> json){
 		String userId;
 		if((userId = authService.validateToken(token)) != null)
 			// DB에 recode 삭제가 성공한 경우
-			if(bookmarkService.removeBookmark(new BookmarkId(userId, postId))==true)
+			if(bookmarkService.removeBookmark(new BookmarkId(userId, json.get("postId")))==true)
 				return new ResponseEntity<>(true, HttpStatus.OK);
 			// DB에 recode 삭제가 실패한 경우 (Id에 해당하는 record가 없는 경우)
 			else

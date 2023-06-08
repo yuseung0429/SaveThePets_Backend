@@ -52,17 +52,12 @@ public class AuthServiceImpl implements AuthService{
 	
 	@Override
     public String generateToken(String userId) {
-        
-        Date now = new Date();
         Key key = new SecretKeySpec(jwtConfig.getKey().getBytes(), "HmacSHA384");
-        
-        return Jwts.builder().signWith(key).setSubject(userId).setIssuedAt(now)
-        		.setExpiration(new Date(now.getTime()+jwtConfig.getExpiration())).compact();
+        return Jwts.builder().signWith(key).setSubject(userId).compact();
     }
 
     @Override
     public String validateToken(String token) {
-
     	Key key = new SecretKeySpec(jwtConfig.getKey().getBytes(), "HmacSHA384");
     	try {
     		Claims claim = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
