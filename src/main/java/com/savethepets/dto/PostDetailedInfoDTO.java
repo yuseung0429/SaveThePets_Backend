@@ -18,6 +18,8 @@ public class PostDetailedInfoDTO {
     LocalDateTime time;
     int type;
     Boolean bookmarked;
+    Double lat;
+    Double lot;
     List<byte[]> pictures;
     List<CommentInfoDTO> comments;
     List<TimelineInfoDTO> timeline;
@@ -28,6 +30,8 @@ public class PostDetailedInfoDTO {
         this.content = post.getContent();
         this.time = post.getTime();
         this.type = post.getType();
+        this.lat = post.getLat();
+        this.lot = post.getLot();
 
         // 북마크 정보 설정
         this.bookmarked = bookmarked;
