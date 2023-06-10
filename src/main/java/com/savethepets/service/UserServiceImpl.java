@@ -3,6 +3,7 @@ package com.savethepets.service;
 import com.savethepets.dto.AlarmInfoDTO;
 import com.savethepets.dto.MyCommentInfoDTO;
 import com.savethepets.dto.PostInfoDTO;
+import com.savethepets.dto.PushDTO;
 import com.savethepets.dto.TokenInfoDTO;
 import com.savethepets.dto.UserInfoDTO;
 
@@ -22,6 +23,7 @@ import com.savethepets.repository.BookmarkRepository;
 import com.savethepets.repository.CommentRepository;
 import com.savethepets.repository.PostPictureRepository;
 import com.savethepets.repository.PostRepository;
+import com.savethepets.repository.TimelineRepository;
 import com.savethepets.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -32,43 +34,29 @@ import java.util.List;
 
 @Service
 @Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
-	@Autowired
 	private final UserRepository userRepository;
-	@Autowired
 	private final PostRepository postRepository;
-	@Autowired
 	private final PostPictureRepository postPictureRepository;
-	@Autowired
 	private final CommentRepository commentRepository;
-	@Autowired
 	private final AlarmRepository alarmRepository;
-	@Autowired
 	private final BookmarkRepository bookmarkRepository;
-
-	@Override
-	public TokenInfoDTO signup(String kakaoToken) {
-		return null;
-	}
 
 	@Override
 	public boolean leaveId(String userId) {
 		User temp;
-		// DB에 userId에 해당하는 record가 있는 경우
 		if((temp = userRepository.findOne(userId)) != null)
 		{
 			userRepository.remove(temp);
 			return true;
 		}
-		// DB에 userId에 해당하는 record가 없는 경우
 		else
 			return false;
 	}
 
 	@Override
 	public boolean updateNickname(String userId, String nickname) {
-		// DB에 해당 nickname을 사용하는 user가 없는 경우
 		if(userRepository.findByNickname(nickname).isEmpty())
 		{
 			User temp = userRepository.findOne(userId);
@@ -76,7 +64,6 @@ public class UserServiceImpl implements UserService{
 			userRepository.save(temp);
 			return true;
 		}
-		// DB에 해당 nickname을 사용하는 user가 있는 경우
 		else
 			return false;
 	}
@@ -88,14 +75,22 @@ public class UserServiceImpl implements UserService{
 		userRepository.save(temp);
 		return true;
 	}
+	
+	@Override
+	public boolean registerPush(String userId, PushDTO pushDTO){
+		User temp = userRepository.findOne(userId);
+		temp.setAuth(pushDTO.getAuth());
+		temp.setP256dh(pushDTO.getP256dh());
+		temp.setEndpoint(pushDTO.getEndpoint());
+		userRepository.save(temp);
+		return true;
+	}
 
 	@Override
 	public UserInfoDTO getUserInfo(String userId) {
 		User temp = userRepository.findOne(userId);
-		// DB에 userId에 해당하는 record가 없는 경우
 		if(temp != null)
 			return new UserInfoDTO(temp);
-		// DB에 userId에 해당하는 record가 있는 경우
 		else
 			return null;
 	}

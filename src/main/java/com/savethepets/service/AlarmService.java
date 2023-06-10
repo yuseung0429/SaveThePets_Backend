@@ -1,6 +1,8 @@
 package com.savethepets.service;
 
-public interface AlarmService {
-    boolean removeAlarm(Long alarmId);
+import com.savethepets.entity.Alarm;
 
+public interface AlarmService {
+	boolean createAlarm(Alarm alarm);
+    boolean removeAlarm(Long alarmId);
 }

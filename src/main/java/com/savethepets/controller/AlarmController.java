@@ -32,12 +32,10 @@ public class AlarmController {
 	ResponseEntity<Boolean> removeAlarm(@RequestHeader("token") String token, @RequestBody() Map<String, Long> json) {
 		if(authService.validateToken(token) != null)
 		{
-			// DB에 recode 삭제가 성공한 경우
 			if(alarmService.removeAlarm(json.get("alarmId")) == true)
 				return new ResponseEntity<>(true, HttpStatus.OK);
-			// DB에 recode 삭제가 실패한 경우 (Id에 해당하는 record가 없는 경우)
 			else
-				return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<>(false, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
 	};

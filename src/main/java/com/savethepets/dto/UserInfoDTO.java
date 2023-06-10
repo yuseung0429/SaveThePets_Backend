@@ -3,10 +3,12 @@ package com.savethepets.dto;
 import com.savethepets.entity.User;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserInfoDTO {
 	String userId;
     String nickname;

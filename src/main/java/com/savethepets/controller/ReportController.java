@@ -37,12 +37,10 @@ public class ReportController {
 		{
 			ReportId tempId = new ReportId(reportDTO.getObjectId(), userId, reportDTO.getType());
 			Report temp = new Report(tempId, reportDTO.getReportType(), reportDTO.getReportReason());
-			// DB에 recode 삽입이 성공한 경우
 			if(reportService.createReport(temp) == true)
 				return new ResponseEntity<>(true, HttpStatus.OK);
-			// DB에 recode 삽입이 실패한 경우 (Id에 해당하는 record가 이미 있는 경우)
 			else
-				return new ResponseEntity<>(false, HttpStatus.CONFLICT);
+				return new ResponseEntity<>(false, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
 	};

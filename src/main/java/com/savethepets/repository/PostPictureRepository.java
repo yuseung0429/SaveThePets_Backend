@@ -36,4 +36,10 @@ public class PostPictureRepository {
 		String query = "select p from PostPicture p where (p.postId in :postIds) and (p.sequence = 0)";
 		return em.createQuery(query, PostPicture.class).setParameter("postIds", postIds).getResultList();
 	}
+	
+	public PostPicture findOne(Long postId)
+	{
+		String query = "select p from PostPicture p where (p.postId = :postId) and (p.sequence = 0)";
+		return em.createQuery(query, PostPicture.class).setParameter("postId", postId).getSingleResult();
+	}
 }
