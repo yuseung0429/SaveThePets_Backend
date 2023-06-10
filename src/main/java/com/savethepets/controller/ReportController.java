@@ -3,8 +3,6 @@ package com.savethepets.controller;
 
 import com.savethepets.service.AuthServiceImpl;
 import com.savethepets.service.ReportServiceImpl;
-import com.savethepets.utility.Utilities;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

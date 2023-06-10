@@ -28,6 +28,7 @@ public class Post {
 	Double accuracy;
 	Double lat;
 	Double lot;
+	String address;
 	LocalDateTime timestamp;
 	LocalDateTime time;
 
@@ -37,7 +38,7 @@ public class Post {
 	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<PostPicture> pictures;
 
-	public Post(String userId, String content, int species, int breed, int type, Double lot, Double lat, LocalDateTime time) {
+	public Post(String userId, String content, int species, int breed, int type, Double lot, Double lat, String address, LocalDateTime time) {
 		this.userId = userId;
 		this.content=content;
 		this.species=species;
@@ -45,6 +46,7 @@ public class Post {
 		this.type=type;
 		this.lat=lat;
 		this.lot=lot;
+		this.address=address;
 		this.time=time;
 		this.timestamp=LocalDateTime.now();
 	}

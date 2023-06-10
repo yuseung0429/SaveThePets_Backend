@@ -18,4 +18,5 @@ public class UpdatePostDTO {
     LocalDateTime time;
     Double postLat;
     Double postLot;
+    String address;
 }

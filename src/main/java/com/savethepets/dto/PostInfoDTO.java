@@ -20,6 +20,7 @@ public class PostInfoDTO {
     int species;
     int breed;
     byte[] picture;
+    String address;
     
     public PostInfoDTO (Post post, PostPicture postpicture)
     {
@@ -31,6 +32,7 @@ public class PostInfoDTO {
     	this.type = post.getType();
     	this.species = post.getSpecies();
     	this.breed = post.getBreed();
+        this.address = post.getAddress();
     	this.picture = postpicture.getPicture();	
     }
 }

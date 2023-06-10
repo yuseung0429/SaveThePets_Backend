@@ -64,6 +64,7 @@ public class PostServiceImpl implements PostService{
 //            existingPost.setAccuracy(post.getAccuracy());
             existingPost.setLat(updatePostDTO.getPostLat());
             existingPost.setLot(updatePostDTO.getPostLot());
+            existingPost.setAddress(updatePostDTO.getAddress());
             existingPost.setTime(updatePostDTO.getTime());
 
             postRepository.save(existingPost);
@@ -119,6 +120,7 @@ public class PostServiceImpl implements PostService{
     public PostDetailedInfoDTO getPostDetail(Long postId) {
         Post post = postRepository.findOne(postId);
         if(post != null){
+            User user = userRepository.findOne(post.getUserId());
             //북마크 정보 넣기
             BookmarkId bookmarkId = new BookmarkId(post.getUserId(),postId);
             Bookmark bookmark = bookmarkRepository.findOne(bookmarkId);
@@ -130,8 +132,8 @@ public class PostServiceImpl implements PostService{
             List<CommentInfoDTO> commentInfoDTOs = new ArrayList<>();
             for(Comment comment : comments){
                 String userId = comment.getUserId();
-                User user = userRepository.findOne(userId);
-                CommentInfoDTO commentInfoDTO = new CommentInfoDTO(comment,user);
+                User user2 = userRepository.findOne(userId);
+                CommentInfoDTO commentInfoDTO = new CommentInfoDTO(comment,user2);
                 commentInfoDTOs.add(commentInfoDTO);
             }
             //게시물 타임라인 넣기
@@ -144,7 +146,7 @@ public class PostServiceImpl implements PostService{
                 TimelineInfoDTO timelineInfoDTO = new TimelineInfoDTO(sightingpost,thumbnail);
                 timelineInfoDTOs.add(timelineInfoDTO);
             }
-            PostDetailedInfoDTO postDetailedInfoDTO = new PostDetailedInfoDTO(post, postPictures, bookmarked, commentInfoDTOs, timelineInfoDTOs);
+            PostDetailedInfoDTO postDetailedInfoDTO = new PostDetailedInfoDTO(post,user,postPictures, bookmarked, commentInfoDTOs, timelineInfoDTOs);
 
             return postDetailedInfoDTO;
         }else{

@@ -4,7 +4,6 @@ import com.savethepets.entity.Bookmark;
 import com.savethepets.id.BookmarkId;
 import com.savethepets.service.AuthServiceImpl;
 import com.savethepets.service.BookmarkServiceImpl;
-import com.savethepets.utility.Utilities;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

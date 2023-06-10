@@ -16,5 +16,6 @@ public class CreatePostDTO {
     LocalDateTime time;
     Double lat;
     Double lot;
+    String address;
     int type;
 }

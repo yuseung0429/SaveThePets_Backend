@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 
 @Getter @Setter
 public class PostDetailedInfoDTO {
+    String userid; // 게시글 작성자 Id
+    String nickname;
+    byte[] profilePicture;
     int species;
     int breed;
     String content;
@@ -20,11 +23,15 @@ public class PostDetailedInfoDTO {
     Boolean bookmarked;
     Double lat;
     Double lot;
+    String address;
     List<byte[]> pictures;
     List<CommentInfoDTO> comments;
     List<TimelineInfoDTO> timeline;
 
-    public PostDetailedInfoDTO(Post post, List<PostPicture> postPictures, Boolean bookmarked, List<CommentInfoDTO> commentInfoDTOs, List<TimelineInfoDTO> timelineInfoDTOs) {
+    public PostDetailedInfoDTO(Post post,User user,List<PostPicture> postPictures, Boolean bookmarked, List<CommentInfoDTO> commentInfoDTOs, List<TimelineInfoDTO> timelineInfoDTOs) {
+        this.userid = user.getUserId();
+        this.nickname = user.getNickname();
+        this.profilePicture = user.getPicture();
         this.species = post.getSpecies();
         this.breed = post.getBreed();
         this.content = post.getContent();
@@ -32,6 +39,7 @@ public class PostDetailedInfoDTO {
         this.type = post.getType();
         this.lat = post.getLat();
         this.lot = post.getLot();
+        this.address = post.getAddress();
 
         // 북마크 정보 설정
         this.bookmarked = bookmarked;
