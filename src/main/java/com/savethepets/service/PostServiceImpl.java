@@ -44,6 +44,8 @@ public class PostServiceImpl implements PostService{
         if((post = postRepository.findOne(postId))!=null)
         {
             postRepository.remove(post);
+            bookmarkRepository.removeByPostId(post.getPostId());
+            timelineRepository.removeByPostId(post.getPostId());
             return true;
         }
         // DB에 postId에 해당하는 record가 없는 경우

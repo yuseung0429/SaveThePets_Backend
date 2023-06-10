@@ -26,7 +26,14 @@ public class TimelineRepository {
 	public Timeline findOne(TimelineId timelineId) {
 		return em.find(Timeline.class, timelineId);
 	}
-	
+
+	public void removeByPostId(Long postId){
+		String query = "delete from Timeline t where t.timelineId.missingPostId = :postId OR t.timelineId.sightingPostId = :postId";
+		em.createQuery(query)
+				.setParameter("postId", postId)
+				.executeUpdate();
+	}
+
 	public List<Timeline> findByMissingPostId(Long missingPostId) {
 		String query = "select t from Timeline t where timelineId.missingPostId = :missingPostId";
 		return em.createQuery(query,Timeline.class).setParameter("missingPostId", missingPostId).getResultList();

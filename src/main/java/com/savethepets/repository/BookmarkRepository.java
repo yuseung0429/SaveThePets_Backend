@@ -22,6 +22,13 @@ public class BookmarkRepository {
 	public void remove(Bookmark bookmark) {
 		em.remove(bookmark);
 	}
+
+	public void removeByPostId(Long postId){
+		String query = "delete from Bookmark b where b.bookmarkId.postId = :postId";
+		em.createQuery(query)
+				.setParameter("postId", postId)
+				.executeUpdate();
+	}
 	
 	public Bookmark findOne(BookmarkId bookmarkId) {
 	    return em.find(Bookmark.class, bookmarkId);
