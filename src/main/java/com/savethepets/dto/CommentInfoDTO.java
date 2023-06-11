@@ -6,6 +6,8 @@ import com.savethepets.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 
@@ -14,11 +16,13 @@ public class CommentInfoDTO {
     String nickname;
     String content;
     byte[] picture;
+    LocalDateTime timestamp;
 
     public CommentInfoDTO(Comment comment,User user) {
         this.commentId = comment.getCommentId();
         this.nickname = user.getNickname();
         this.content = comment.getContent();
         this.picture = user.getPicture();
+        this.timestamp = comment.getTimestamp();
     }
 }

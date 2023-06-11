@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.savethepets.dto.DistancePostDTO;
 import com.savethepets.dto.FilterDTO;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
@@ -60,6 +61,43 @@ public class PostRepository {
 		return em.createQuery(query, Post.class)
 				.setParameter("userId", userId)
 				.getResultList();
+	}
+
+	public List<Post> findPostsByDistance(DistancePostDTO distancePostDTO){
+		// 디스턴스디티오에서 우상단 좌표와 좌하단 좌표를 가져옴
+		Double rightUpLat = distancePostDTO.getRightUpLat();
+		Double rightUpLot = distancePostDTO.getRightUpLot();
+		Double leftDownLat = distancePostDTO.getLeftDownlat();
+		Double leftDownLot = distancePostDTO.getLeftDownlot();
+
+		// 위도와 경도의 최소값과 최대값 계산
+		Double minLat = Math.min(rightUpLat, leftDownLat);
+		Double maxLat = Math.max(rightUpLat, leftDownLat);
+		Double minLot = Math.min(rightUpLot, leftDownLot);
+		Double maxLot = Math.max(rightUpLot, leftDownLot);
+
+		// 축척 계산
+		Double latRange = maxLat - minLat;
+		Double lotRange = maxLot - minLot;
+
+		// 축척을 기준으로 필요한 게시글 조회를 위한 조건 계산
+		Double latThreshold = latRange * 0.1; // 위도의 10% 범위
+		Double lotThreshold = lotRange * 0.1; // 경도의 10% 범위
+
+		// 게시글 조회를 위한 쿼리 작성
+		String query = "select p from Post p where p.lat between :minLat and :maxLat and p.lot between :minLot and :maxLot " +
+				"and (p.lat between :minLatThreshold and :maxLatThreshold or p.lot between :minLotThreshold and :maxLotThreshold)";
+		TypedQuery<Post> typedQuery = em.createQuery(query, Post.class);
+		typedQuery.setParameter("minLat", minLat);
+		typedQuery.setParameter("maxLat", maxLat);
+		typedQuery.setParameter("minLot", minLot);
+		typedQuery.setParameter("maxLot", maxLot);
+		typedQuery.setParameter("minLatThreshold", minLat - latThreshold);
+		typedQuery.setParameter("maxLatThreshold", maxLat + latThreshold);
+		typedQuery.setParameter("minLotThreshold", minLot - lotThreshold);
+		typedQuery.setParameter("maxLotThreshold", maxLot + lotThreshold);
+
+		return typedQuery.getResultList();
 	}
 
 	public List<Post> findFilteredPosts(FilterDTO filterDTO) {

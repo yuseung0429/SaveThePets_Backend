@@ -66,10 +66,13 @@ public class PostController {
 	ResponseEntity<List<PostInfoDTO>> getBoardPosts() {
 		List<PostInfoDTO> posts = postService.getBoardPosts();
 		return new ResponseEntity<>(posts, HttpStatus.OK);
-	}
+	};
 	
 	@GetMapping("/map")
-	ResponseEntity<List<PostInfoDTO>> getMapPosts(@ModelAttribute DistancePostDTO distancePostDTO) {return new ResponseEntity<>(HttpStatus.OK);};
+	ResponseEntity<List<PostInfoDTO>> getMapPosts(@ModelAttribute DistancePostDTO distancePostDTO) {
+		List<PostInfoDTO> posts = postService.getMapPosts(distancePostDTO);
+		return new ResponseEntity<>(posts, HttpStatus.OK);
+	};
 
 	@GetMapping("/filtered")
 	ResponseEntity<List<PostInfoDTO>> getFilteredPosts(@ModelAttribute FilterDTO filterDTO) {

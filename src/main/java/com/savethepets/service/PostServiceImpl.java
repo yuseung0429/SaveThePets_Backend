@@ -103,8 +103,14 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<PostInfoDTO> getMapPosts(Double userLat, Double userLot) {
-        return null;
+    public List<PostInfoDTO> getMapPosts(DistancePostDTO distancePostDTO) {
+        List<Post> mapPosts = postRepository.findPostsByDistance(distancePostDTO);//  필터링된 게시물 가져오기
+        List<PostInfoDTO> postInfos = new ArrayList<PostInfoDTO>();
+        for(Post i : mapPosts) {
+            PostPicture temp = postPictureRepository.findOne(new PostPictureId(i.getPostId(), 0));
+            postInfos.add(new PostInfoDTO(i,temp));
+        }
+        return postInfos;
     }
 
     @Override
@@ -115,6 +121,7 @@ public class PostServiceImpl implements PostService{
             PostPicture temp = postPictureRepository.findOne(new PostPictureId(i.getPostId(), 0));
             postInfos.add(new PostInfoDTO(i,temp));
         }
+        postInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
         return postInfos;
     }
 
@@ -138,6 +145,8 @@ public class PostServiceImpl implements PostService{
                 CommentInfoDTO commentInfoDTO = new CommentInfoDTO(comment,user2);
                 commentInfoDTOs.add(commentInfoDTO);
             }
+            commentInfoDTOs.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
+
             //게시물 타임라인 넣기
             List<Timeline> timelines = timelineRepository.findByMissingPostId(postId);
             List<TimelineInfoDTO> timelineInfoDTOs = new ArrayList<>();
@@ -148,6 +157,7 @@ public class PostServiceImpl implements PostService{
                 TimelineInfoDTO timelineInfoDTO = new TimelineInfoDTO(sightingpost,thumbnail);
                 timelineInfoDTOs.add(timelineInfoDTO);
             }
+
             PostDetailedInfoDTO postDetailedInfoDTO = new PostDetailedInfoDTO(post,user,postPictures, bookmarked, commentInfoDTOs, timelineInfoDTOs);
 
             return postDetailedInfoDTO;

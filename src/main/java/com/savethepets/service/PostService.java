@@ -11,7 +11,7 @@ public interface PostService {
     boolean removePost(Long postId);
     boolean updatePost(UpdatePostDTO updatePostDTO);
     List<PostInfoDTO> getBoardPosts();
-    List<PostInfoDTO> getMapPosts(Double userLat, Double userLot);
+    List<PostInfoDTO> getMapPosts(DistancePostDTO distancePostDTO);
     List<PostInfoDTO> getFilteredPosts(FilterDTO filterDTO);
     PostDetailedInfoDTO getPostDetail(Long postId);
     List<PostInfoDTO> getMyLostPosts(String userId);
