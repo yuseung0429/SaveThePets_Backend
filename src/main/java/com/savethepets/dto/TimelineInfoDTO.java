@@ -13,6 +13,7 @@ public class TimelineInfoDTO {
     LocalDateTime time;
     Double postLat;
     Double postLot;
+    String address;
     int species;
     int breed;
     byte[] picture;
@@ -22,6 +23,7 @@ public class TimelineInfoDTO {
         this.time = sightingpost.getTime();
         this.postLat = sightingpost.getLat();
         this.postLot = sightingpost.getLot();
+        this.address = sightingpost.getAddress();
         this.species = sightingpost.getSpecies();
         this.breed = sightingpost.getBreed();
         this.picture = picture;
