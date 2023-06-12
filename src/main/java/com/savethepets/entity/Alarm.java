@@ -36,4 +36,13 @@ public class Alarm {
 		this.timestamp = now;
 		this.type = type;
 	}
+	
+	public Alarm(String receiverId, Long postId, LocalDateTime now, int type) {
+		this.receiverId = receiverId;
+		this.postId = postId;
+		this.timestamp = now;
+		this.type = type;
+	}
+	
+	
 }

@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService{
-
     private final PostRepository postRepository;
     private final PostPictureRepository postPictureRepository;
     private final CommentRepository commentRepository;
@@ -166,7 +165,6 @@ public class PostServiceImpl implements PostService{
         }
     }
 
-
     @Override
     public List<PostInfoDTO> getMyLostPosts(String userId) {
         List<Post> lostPosts = postRepository.findLostPostsByUserId(userId); // 사용자의 분실 게시물 가져오기
@@ -177,11 +175,5 @@ public class PostServiceImpl implements PostService{
         }
         postInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
         return postInfos;
-    }
-
-
-    @Override
-    public AnalyzedPictureDTO analyzePictures(List<byte[]> pictures) {
-        return null;
     }
 }

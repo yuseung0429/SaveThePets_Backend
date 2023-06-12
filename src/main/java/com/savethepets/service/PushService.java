@@ -4,5 +4,5 @@ import com.savethepets.entity.Alarm;
 
 public interface PushService {
 
-	boolean createPush(String userId, Alarm alarm);
+	boolean createPush(Alarm alarm);
 }

@@ -36,8 +36,8 @@ public class PushServiceImpl implements PushService{
 	private final PostPictureRepository postPictureRepository;
 	
 	@Override
-	public boolean createPush(String userId, Alarm alarm) {
-		User temp = userRepository.findOne(userId);
+	public boolean createPush(Alarm alarm) {
+		User temp = userRepository.findOne(alarm.getReceiverId());
 		PushInfoDTO pushDTO;
 		if(alarm.getType() != Alarm.COMMENT)
 		{
@@ -60,7 +60,4 @@ public class PushServiceImpl implements PushService{
 		}
 		return true;
 	}
-
-
-
 }

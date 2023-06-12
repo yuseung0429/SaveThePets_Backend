@@ -1,10 +1,14 @@
 package com.savethepets.service;
 
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.savethepets.entity.Alarm;
 import com.savethepets.repository.AlarmRepository;
+import com.savethepets.repository.PostRepository;
+import com.savethepets.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AlarmServiceImpl implements AlarmService{
 
+	private final PostRepository postRepository;
 	private final AlarmRepository alarmRepository;
 
     @Override
@@ -20,6 +25,13 @@ public class AlarmServiceImpl implements AlarmService{
     {
 		alarmRepository.save(alarm);
 		return true;
+    }
+    
+    @Override
+    public Alarm makeAlarm(Long missingPostId, Long sightPostId)
+    {
+    	String tempUserId = postRepository.findOne(missingPostId).getUserId();
+    	return new Alarm(tempUserId, sightPostId, LocalDateTime.now(), Alarm.SIGHTING);
     }
 	
     @Override
