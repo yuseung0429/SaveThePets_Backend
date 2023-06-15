@@ -1,7 +1,6 @@
 package com.savethepets.service;
 
 import java.security.Key;
-import java.util.Date;
 
 import javax.crypto.spec.SecretKeySpec;
 

@@ -7,10 +7,12 @@ import com.savethepets.service.AuthServiceImpl;
 import com.savethepets.service.PostServiceImpl;
 import com.savethepets.service.PushServiceImpl;
 import com.savethepets.service.UserServiceImpl;
+import com.savethepets.utility.Utilities;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -33,13 +35,15 @@ public class PostController {
 	private final AuthServiceImpl authService;
 	private final PushServiceImpl pushService;
 
-	@PostMapping()
-	ResponseEntity<Long> createPost(@RequestHeader("token") String token, @RequestBody CreatePostDTO createPostDTO) {
+	@PostMapping(consumes = "multipart/form-data")
+	ResponseEntity<Long> createPost(@RequestHeader("token") String token, CreatePostDTO createPostDTO) {
 		String userId;
 		if((userId = authService.validateToken(token)) != null){
-			List<byte[]> pictures = createPostDTO.getPictures();
+			List<MultipartFile> pictures = createPostDTO.getPictures();
 			Post post = new Post(userId, createPostDTO.getContent(),createPostDTO.getSpecies(),createPostDTO.getBreed(),createPostDTO.getType(),createPostDTO.getLot(),createPostDTO.getLat(), createPostDTO.getAddress(), createPostDTO.getTime());
-			Long postId = postService.createPost(post,pictures);
+			List<File> temp = Utilities.convertMultipartFileListToFileList(pictures);
+			System.out.println(temp.size());
+			Long postId = postService.createPost(post,temp);
 			return new ResponseEntity<>(postId, HttpStatus.OK);
 		}
 		else
@@ -57,8 +61,8 @@ public class PostController {
 				return new ResponseEntity<>(false, HttpStatus.OK);
 		return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
 	};
-	@PutMapping()
-	ResponseEntity<Boolean> updatePost(@RequestHeader("token") String token, @RequestBody UpdatePostDTO updatePostDTO) {
+	@PutMapping(consumes = "multipart/form-data")
+	ResponseEntity<Boolean> updatePost(@RequestHeader("token") String token, UpdatePostDTO updatePostDTO) {
 		if((authService.validateToken(token)) != null)
 		{
 			// DB에 recode 수정 성공한 경우

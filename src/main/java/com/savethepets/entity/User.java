@@ -18,12 +18,12 @@ public class User {
 	@Id
 	String userId;
 	String nickname;
-	byte[] picture;
+	String picture;
 	String endpoint;
 	String p256dh;
 	String auth;
 	
-	public User(String userId, String nickname, byte[] picture) {
+	public User(String userId, String nickname, String picture) {
 		this.userId = userId;
 		this.nickname = nickname;
 		this.picture = picture;

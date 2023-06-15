@@ -5,18 +5,21 @@ import com.savethepets.entity.*;
 import com.savethepets.id.BookmarkId;
 import com.savethepets.id.PostPictureId;
 import com.savethepets.repository.*;
+import com.savethepets.utility.Utilities;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService{
+	private final AwsServiceImpl awsService;
     private final PostRepository postRepository;
     private final PostPictureRepository postPictureRepository;
     private final CommentRepository commentRepository;
@@ -25,12 +28,13 @@ public class PostServiceImpl implements PostService{
     private final UserRepository userRepository;
 
     @Override
-    public Long createPost(Post post, List<byte[]> pictures){
+    public Long createPost(Post post, List<File> pictures){
         Long postId = postRepository.create(post); // Post 저장하여 postId 생성
         if(pictures!=null){
             //PostPicture에 게시글 사진 저장
             for(int i = 0; i< pictures.size(); i++) {
-                postPictureRepository.save(new PostPicture(new PostPictureId(postId, i), pictures.get(i)));
+            	String url = awsService.save(pictures.get(i), "posts/"+postId, String.valueOf(i), Utilities.getExtension(pictures.get(i).getName()));
+                postPictureRepository.save(new PostPicture(new PostPictureId(postId, i), url));
             }
         }
         return postId;
@@ -45,6 +49,8 @@ public class PostServiceImpl implements PostService{
             postRepository.remove(post);
             bookmarkRepository.removeByPostId(post.getPostId());
             timelineRepository.removeByPostId(post.getPostId());
+            // ### PostPicture에서도 모두 지워야됨
+            // ### awsService.remove("posts/"+post.getPostId());
             return true;
         }
         // DB에 postId에 해당하는 record가 없는 경우
@@ -70,6 +76,9 @@ public class PostServiceImpl implements PostService{
 
             postRepository.save(existingPost);
 
+            awsService.remove("posts/"+existingPost.getPostId());
+           
+            
             // 기존에 첨부된 사진 삭제
             List<PostPicture> existingPictures = postPictureRepository.findByPostId(updatePostDTO.getPostId());
             if (existingPictures != null) {
@@ -77,11 +86,14 @@ public class PostServiceImpl implements PostService{
                     postPictureRepository.remove(picture);
                 }
             }
+            
             // 사진 다시 등록
-            List<byte[]> pictures = updatePostDTO.getPictures();
-            if (pictures != null) {
-                for (int i = 0; i < pictures.size(); i++) {
-                    postPictureRepository.save(new PostPicture(new PostPictureId(updatePostDTO.getPostId(), i), pictures.get(i)));
+            List<File> pictures = Utilities.convertMultipartFileListToFileList(updatePostDTO.getPictures());
+            if(pictures!=null){
+                //PostPicture에 게시글 사진 저장
+                for(int i = 0; i< pictures.size(); i++) {
+                	String url = awsService.save(pictures.get(i), "posts/"+existingPost.getPostId(), String.valueOf(i), Utilities.getExtension(pictures.get(i).getName()));
+                    postPictureRepository.save(new PostPicture(new PostPictureId(existingPost.getPostId(), i), url));
                 }
             }
             return true;
@@ -152,7 +164,7 @@ public class PostServiceImpl implements PostService{
             for(Timeline timeline : timelines){
                 Post sightingpost = postRepository.findOne(timeline.getTimelineId().getSightingPostId());
                 PostPictureId postPictureId = new PostPictureId(timeline.getTimelineId().getSightingPostId(),0);
-                byte[] thumbnail = postPictureRepository.findOne(postPictureId).getPicture();
+                String thumbnail = postPictureRepository.findOne(postPictureId).getPicture();
                 TimelineInfoDTO timelineInfoDTO = new TimelineInfoDTO(sightingpost,thumbnail);
                 timelineInfoDTOs.add(timelineInfoDTO);
             }

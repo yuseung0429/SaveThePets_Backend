@@ -18,7 +18,7 @@ public class MyCommentInfoDTO {
     int species;
     int breed;
     int type;
-    byte[] picture;
+    String picture;
     String content;
     LocalDateTime time;
     LocalDateTime timestamp;

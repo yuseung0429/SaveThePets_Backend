@@ -1,19 +1,9 @@
 package com.savethepets.service;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.spec.InvalidKeySpecException;
-import java.util.concurrent.ExecutionException;
 
-import org.jose4j.lang.JoseException;
-import org.json.JSONObject;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.savethepets.dto.PushInfoDTO;
 import com.savethepets.entity.Alarm;

@@ -19,7 +19,7 @@ public class PostInfoDTO {
     int type;
     int species;
     int breed;
-    byte[] picture;
+    String picture;
     String address;
     
     public PostInfoDTO (Post post, PostPicture postpicture)

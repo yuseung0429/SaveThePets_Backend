@@ -1,8 +1,6 @@
 package com.savethepets.service;
 
-import com.savethepets.entity.Bookmark;
 import com.savethepets.entity.Timeline;
-import com.savethepets.id.BookmarkId;
 import com.savethepets.id.TimelineId;
 import com.savethepets.repository.TimelineRepository;
 import lombok.RequiredArgsConstructor;

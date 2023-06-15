@@ -12,7 +12,7 @@ import lombok.Setter;
 public class UserInfoDTO {
 	String userId;
     String nickname;
-    byte[] picture;
+    String picture;
     
     public UserInfoDTO(User user)
     {

@@ -3,9 +3,7 @@ package com.savethepets.entity;
 import com.savethepets.id.PostPictureId;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -16,7 +14,7 @@ public class PostPicture {
 	@EmbeddedId
 	PostPictureId postpictureid;
 
-	byte[] picture;
+	String picture;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "post_id", insertable = false, updatable = false)
@@ -25,9 +23,9 @@ public class PostPicture {
 	public PostPicture() {
 	}
 
-	public PostPicture(PostPictureId postPictureId, byte[] bytes) {
+	public PostPicture(PostPictureId postPictureId, String picture) {
 		this.postpictureid = postPictureId;
-		this.picture = bytes;
+		this.picture = picture;
 	}
 
 

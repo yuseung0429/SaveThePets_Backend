@@ -1,8 +1,6 @@
 package com.savethepets.dto;
 
 import com.savethepets.entity.*;
-import com.savethepets.id.BookmarkId;
-import com.savethepets.id.PostPictureId;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +12,7 @@ import java.util.stream.Collectors;
 public class PostDetailedInfoDTO {
     String userid; // 게시글 작성자 Id
     String nickname;
-    byte[] profilePicture;
+    String profilePicture;
     int species;
     int breed;
     String content;
@@ -24,7 +22,7 @@ public class PostDetailedInfoDTO {
     Double lat;
     Double lot;
     String address;
-    List<byte[]> pictures;
+    List<String> pictures;
     List<CommentInfoDTO> comments;
     List<TimelineInfoDTO> timeline;
 

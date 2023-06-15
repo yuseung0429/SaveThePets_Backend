@@ -15,7 +15,7 @@ public class AlarmInfoDTO {
 	Long alarmId;
     Long postId;
     String nickname;
-    byte[] picture;
+    String picture;
     int species;
     int breed;
     LocalDateTime timestamp;

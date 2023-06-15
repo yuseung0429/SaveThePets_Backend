@@ -15,7 +15,7 @@ public class CommentInfoDTO {
     Long commentId;
     String nickname;
     String content;
-    byte[] picture;
+    String picture;
     LocalDateTime timestamp;
 
     public CommentInfoDTO(Comment comment,User user) {

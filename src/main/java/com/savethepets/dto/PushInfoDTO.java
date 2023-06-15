@@ -15,7 +15,7 @@ import lombok.Setter;
 public class PushInfoDTO {
 	Long postId;
 	String nickname;
-	byte[] picture;
+	String picture;
 	int species;
 	int breed;
 	LocalDateTime timestamp;

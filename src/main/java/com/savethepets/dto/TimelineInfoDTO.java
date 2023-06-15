@@ -1,7 +1,6 @@
 package com.savethepets.dto;
 
 import com.savethepets.entity.Post;
-import com.savethepets.id.PostPictureId;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,9 +15,9 @@ public class TimelineInfoDTO {
     String address;
     int species;
     int breed;
-    byte[] picture;
+    String picture;
 
-    public TimelineInfoDTO(Post sightingpost,byte[] picture ) {
+    public TimelineInfoDTO(Post sightingpost,String picture) {
         this.sightingPostId = sightingpost.getPostId();
         this.time = sightingpost.getTime();
         this.postLat = sightingpost.getLat();

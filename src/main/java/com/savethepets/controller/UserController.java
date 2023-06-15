@@ -1,12 +1,14 @@
 package com.savethepets.controller;
 
 import com.savethepets.service.AuthServiceImpl;
+import com.savethepets.service.AwsServiceImpl;
 import com.savethepets.service.UserServiceImpl;
 import com.savethepets.utility.Utilities;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +21,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.util.ByteArrayBuilder;
 import com.savethepets.dto.*;
 
 @Slf4j
@@ -56,13 +59,16 @@ public class UserController {
 	};
 	
 	@PutMapping("/update-picture")
-	ResponseEntity<Boolean> updatePicture(@RequestHeader("token") String token, @RequestBody() Map<String, String> json) {
+	ResponseEntity<Boolean> updatePicture(@RequestHeader("token") String token, @RequestParam("picture") MultipartFile picture) {
 		String userId;
 		if((userId= authService.validateToken(token))!=null)
-			if(userService.updatePicture(userId, json.get("picture").getBytes())==true)
+		{
+			File temp = Utilities.convertMultipartFileToFile(picture);
+			if(userService.updatePicture(userId, temp)==true)
 				return new ResponseEntity<>(true, HttpStatus.OK);
 			else
 				return new ResponseEntity<>(false, HttpStatus.OK);
+		}
 		return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 	};
 	

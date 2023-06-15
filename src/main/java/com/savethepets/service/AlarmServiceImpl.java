@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.savethepets.entity.Alarm;
 import com.savethepets.repository.AlarmRepository;
 import com.savethepets.repository.PostRepository;
-import com.savethepets.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 

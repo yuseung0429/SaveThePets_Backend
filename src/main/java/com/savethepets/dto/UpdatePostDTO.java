@@ -6,11 +6,13 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 @Getter
 @Setter
 public class UpdatePostDTO {
     Long postId;
-    List<byte[]> pictures;
+    List<MultipartFile> pictures;
     String content;
     int species;
     int breed;

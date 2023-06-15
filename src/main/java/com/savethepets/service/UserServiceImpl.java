@@ -4,10 +4,8 @@ import com.savethepets.dto.AlarmInfoDTO;
 import com.savethepets.dto.MyCommentInfoDTO;
 import com.savethepets.dto.PostInfoDTO;
 import com.savethepets.dto.PushDTO;
-import com.savethepets.dto.TokenInfoDTO;
 import com.savethepets.dto.UserInfoDTO;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +21,12 @@ import com.savethepets.repository.BookmarkRepository;
 import com.savethepets.repository.CommentRepository;
 import com.savethepets.repository.PostPictureRepository;
 import com.savethepets.repository.PostRepository;
-import com.savethepets.repository.TimelineRepository;
 import com.savethepets.repository.UserRepository;
+import com.savethepets.utility.Utilities;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +34,7 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
+	private final AwsServiceImpl awsService;
 	private final UserRepository userRepository;
 	private final PostRepository postRepository;
 	private final PostPictureRepository postPictureRepository;
@@ -69,9 +68,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean updatePicture(String userId, byte[] picture) {
+	public boolean updatePicture(String userId, File picture) {
 		User temp = userRepository.findOne(userId);
-		temp.setPicture(picture);
+		temp.setPicture(awsService.save(picture, "users/"+userId, "profile", Utilities.getExtension(picture.getName())));
 		userRepository.save(temp);
 		return true;
 	}
