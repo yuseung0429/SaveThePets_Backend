@@ -94,10 +94,11 @@ public class PostController {
 	};
 
 	@GetMapping("/{postId}")
-	ResponseEntity<PostDetailedInfoDTO> getPostDetail(@RequestBody() Map<String, Long> json) {
-		PostDetailedInfoDTO post = postService.getPostDetail(json.get("postId"));
-				return new ResponseEntity<>(post, HttpStatus.OK);
-	};
+	ResponseEntity<PostDetailedInfoDTO> getPostDetail(@PathVariable("postId") Long postId) {
+		PostDetailedInfoDTO post = postService.getPostDetail(postId);
+		return new ResponseEntity<>(post, HttpStatus.OK);
+	}
+
 
 	@GetMapping("/mylost")
 	ResponseEntity<List<PostInfoDTO>> getMyLostPosts(@RequestHeader("token") String token) {
