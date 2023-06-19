@@ -35,6 +35,7 @@ import lombok.RequiredArgsConstructor;
 public class AwsServiceImpl implements AwsService{
     private final AmazonS3 amazonS3;
     
+    /** AWS Bucket 이름*/
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
     
@@ -60,19 +61,23 @@ public class AwsServiceImpl implements AwsService{
         return amazonS3.getUrl(bucket, fileName).toString();
     }
 
+    /**
+	 * Description<br>
+	 *  - remove : AWS S3에 데이터를 삭제하는 메소드 <br>
+	 * @param path 삭제할 파일 또는 디렉토리 경로
+	 * @author Kwon Jin.
+	 * @since 2023.06.19
+	 */
     @Override
-    public void remove(String file) {
-        ObjectListing objectListing = amazonS3.listObjects(bucket, file);
+    public void remove(String path) {
+        ObjectListing objectListing = amazonS3.listObjects(bucket, path);
         List<S3ObjectSummary> objectSummaries = objectListing.getObjectSummaries();
-
-        for (S3ObjectSummary objectSummary : objectSummaries) {
+        for (S3ObjectSummary objectSummary : objectSummaries)
             amazonS3.deleteObject(bucket, objectSummary.getKey());
-        }
-
         if (objectListing.isTruncated()) {
-            remove(file); // 재귀적으로 호출하여 나머지 객체 삭제
+            remove(path);
         } else {
-            amazonS3.deleteObject(bucket, file + "/"); // 디렉토리 삭제
+            amazonS3.deleteObject(bucket, path + "/");
         }
     }
 }
