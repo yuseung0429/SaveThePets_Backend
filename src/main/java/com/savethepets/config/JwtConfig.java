@@ -1,16 +1,21 @@
 package com.savethepets.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import lombok.Getter;
-import lombok.Setter;
-
+/**
+ * Description<br>
+ *  - JwtConfig Class : JWT 관련 Configuration 클래스<br>
+ * <br>
+ * Field<br>
+ *  - key : JWT 대칭키 <br>
+ * @author Yuseung lee.
+ * @since 2023.06.19
+ */
 @Configuration
-@ConfigurationProperties(prefix = "jwt")
 @Getter
-@Setter
 public class JwtConfig {
+	@Value("${jwt.key}")
 	private String key;
-	private long expiration;
 }

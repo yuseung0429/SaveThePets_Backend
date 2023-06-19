@@ -11,18 +11,41 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+/**
+ * Description<br>
+ *  - AwsServiceImpl Class : AwsService를 구현한 구현체 클래스<br>
+ * <br>
+ * Field<br>
+ * 	- amazonS3 : AWS S3 Service 접근을 위한 Object<br>
+ *  - bucket : AWS Bucket 이름<br>
+ * <br>
+ * Method <br>
+ *  - save : AWS S3에 데이터를 저장하는 메소드 <br>
+ * 	- remove : AWS S3에 데이터를 삭제하는 메소드 <br>
+ * @author Yuseung lee.
+ * @since 2023.06.19
+ */
 @RequiredArgsConstructor
 @Component
 @Service
 public class AwsServiceImpl implements AwsService{
     private final AmazonS3 amazonS3;
-
+    
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
-
+    
+	/**
+	 * Description<br>
+	 *  - save : AWS S3에 데이터를 저장하는 메소드<br>
+	 * @param file 저장할 File Object
+	 * @param dir 파일이 저장될 디렉토리 주소
+	 * @param filename 파일 이름
+	 * @param extention 파일 확장자
+	 * @return 파일이 저장된 URL
+	 * @author Yuseung lee.
+	 * @since 2023.06.19
+	 */
     @Override
     public String save(File file, String dir, String filename, String extention){
     	String fileName = dir + "/" + filename + extention;

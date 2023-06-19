@@ -4,7 +4,6 @@ import com.savethepets.service.AlarmServiceImpl;
 import com.savethepets.service.AuthServiceImpl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
@@ -17,8 +16,18 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-@Slf4j
+/**
+ * Description<br>
+ *  - AlarmController Class : Alarm 관련 정보를 처리하는 UserController Class<br>
+ * <br>
+ * Field<br>
+ * 	- alarmService : 알람 관련 처리를 위한 AlarmService <br>
+ *  - authService : 인증 관련 처리를 위한 AuthService <br>
+ * Method<br>
+ *  - removeAlarm : 알람을 삭제하는 Service와 연결하는 메소드 <br> 
+ * @author Yuseung lee.
+ * @since 2023.06.19
+ */
 @RestController
 @RequestMapping(value = "/alarm")
 @RequiredArgsConstructor
@@ -26,12 +35,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class AlarmController {
 	private final AlarmServiceImpl alarmService;
 	private final AuthServiceImpl authService;
-	
+	/**
+	 * Description<br>
+	 *  - removeAlarm : 알람을 삭제하는 Service와 연결하는 메소드 <br> 
+	 * <br>
+	 * EndPoint<br>
+	 *  - /alarm<br>
+	 * <br>
+	 * Mapping method<br>
+	 *  - DeleteMapping<br>
+	 * @param token JWT
+	 * @param json key에 "alarmId"가 포함된 json Object
+	 * @return ResponseEntity와 true/false(삭제 성공 여부)
+	 * @author Yuseung lee.
+	 * @since 2023.06.19
+	 */
 	@DeleteMapping()
 	ResponseEntity<Boolean> removeAlarm(@RequestHeader("token") String token, @RequestBody() Map<String, Long> json) {
-		if(authService.validateToken(token) != null)
+		Long temp = json.get("alarmId");
+		if(temp!=null&&authService.validateToken(token)!=null)
 		{
-			if(alarmService.removeAlarm(json.get("alarmId")) == true)
+			if(alarmService.removeAlarm(temp) == true)
 				return new ResponseEntity<>(true, HttpStatus.OK);
 			else
 				return new ResponseEntity<>(false, HttpStatus.OK);

@@ -19,6 +19,7 @@ public class Post {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long postId;
 	String userId;
+	@Column(length = 1000)
 	String content;
 	int species;
 	int breed;

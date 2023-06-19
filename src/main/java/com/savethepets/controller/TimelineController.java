@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.savethepets.dto.*;
 
-@Slf4j
 @RestController
 @RequestMapping(value = "/timeline")
 @RequiredArgsConstructor
