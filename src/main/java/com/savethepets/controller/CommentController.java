@@ -5,9 +5,9 @@ import com.savethepets.entity.Comment;
 import com.savethepets.service.AlarmServiceImpl;
 import com.savethepets.service.AuthServiceImpl;
 import com.savethepets.service.CommentServiceImpl;
+import com.savethepets.service.PushServiceImpl;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +27,16 @@ public class CommentController {
 	private final CommentServiceImpl commentService;
 	private final AuthServiceImpl authService;
 	private final AlarmServiceImpl alarmService;
+	private final PushServiceImpl pushService;
 	@PostMapping()
 	ResponseEntity<Boolean> createComment(@RequestHeader("token") String token, @RequestBody CreateCommentDTO createCommentDTO) {
 		String userId;
 		if((userId = authService.validateToken(token)) != null)
 			// DB에 recode 삽입이 성공한 경우
 			if(commentService.createComment(new Comment(createCommentDTO.getPostId(),userId, createCommentDTO.getContent(), LocalDateTime.now()))==true){
-				alarmService.createAlarm(new Alarm(userId,createCommentDTO.getUserId(),createCommentDTO.getPostId(),LocalDateTime.now(), 4));
+				Alarm temp = new Alarm(userId,createCommentDTO.getUserId(),createCommentDTO.getPostId(),LocalDateTime.now(), 4);
+				alarmService.createAlarm(temp);
+				//pushService.createPush(temp);
 				return new ResponseEntity<>(true, HttpStatus.OK);
 			}
 				// DB에 recode 삽입이 실패한 경우

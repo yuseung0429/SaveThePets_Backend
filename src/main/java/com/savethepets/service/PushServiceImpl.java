@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.savethepets.config.JwtConfig;
 import com.savethepets.config.PushConfig;
 import com.savethepets.dto.PushInfoDTO;
 import com.savethepets.entity.Alarm;
@@ -53,6 +52,8 @@ public class PushServiceImpl implements PushService{
 	public boolean createPush(Alarm alarm) {
 		User temp = userRepository.findOne(alarm.getReceiverId());
 		PushInfoDTO pushDTO;
+		if(temp.getEndpoint()==null || temp.getP256dh()==null || temp.getAuth()==null)
+			return false;
 		if(alarm.getType() != Alarm.COMMENT)
 		{
 			Post tempPost = postRepository.findOne(alarm.getPostId());
