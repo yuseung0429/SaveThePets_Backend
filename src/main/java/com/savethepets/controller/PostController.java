@@ -43,6 +43,7 @@ public class PostController {
 			List<File> temp = Utilities.convertMultipartFileListToFileList(pictures);
 			System.out.println(temp.size());
 			Long postId = postService.createPost(post,temp);
+			postService.sendPostNotification(postId);
 			return new ResponseEntity<>(postId, HttpStatus.OK);
 		}
 		else

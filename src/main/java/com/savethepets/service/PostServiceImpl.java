@@ -39,7 +39,6 @@ public class PostServiceImpl implements PostService{
                 postPictureRepository.save(new PostPicture(new PostPictureId(postId, i), url));
             }
         }
-        sendPostNotification(postId);
         return postId;
     }
 
