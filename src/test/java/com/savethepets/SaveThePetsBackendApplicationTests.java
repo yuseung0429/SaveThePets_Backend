@@ -1,7 +1,12 @@
 //
 //package com.savethepets;
 //
-//import java.io.File;
+//import java.security.KeyPair;
+//import java.security.KeyPairGenerator;
+//import java.security.NoSuchAlgorithmException;
+//import java.security.PrivateKey;
+//import java.security.PublicKey;
+//import java.util.Base64;
 //
 //import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +40,6 @@
 //	}
 //	
 //	@Test
-//	void contextLoads() {
-//		awsService.remove("Tests");
+//	void contextLoads() {		
 //	}
 //}
