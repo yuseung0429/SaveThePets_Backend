@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.savethepets.dto.*;
 
-@Slf4j
 @RestController
 @RequestMapping(value = "/post")
 @RequiredArgsConstructor

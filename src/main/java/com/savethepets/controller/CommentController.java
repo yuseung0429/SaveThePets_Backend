@@ -18,7 +18,6 @@ import com.savethepets.dto.*;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-@Slf4j
 @RestController
 @RequestMapping(value = "/comment")
 @RequiredArgsConstructor
