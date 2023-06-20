@@ -16,4 +16,5 @@ public interface PostService {
     List<PostInfoDTO> getFilteredPosts(FilterDTO filterDTO);
     PostDetailedInfoDTO getPostDetail(Long postId);
     List<PostInfoDTO> getMyLostPosts(String userId);
+	void sendPostNotification(String postId, int type);
 }

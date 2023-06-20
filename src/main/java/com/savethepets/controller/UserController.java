@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.savethepets.dto.*;
+import com.savethepets.enums.Species;
 
 /**
  * Description<br>

@@ -8,8 +8,17 @@ import com.savethepets.repository.*;
 import com.savethepets.utility.Utilities;
 
 import lombok.RequiredArgsConstructor;
+
+import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -188,4 +197,28 @@ public class PostServiceImpl implements PostService{
         postInfos.sort((a,b)->b.getTimestamp().compareTo(a.getTimestamp()));
         return postInfos;
     }
+    
+	/**
+	 * Description<br>
+	 *  - sendPostNotification : 게시물이 작성될 경우 AI서버에 요청을 보내는 메소드<br>
+	 * @param postId 게시물 Id
+	 * @param type 게시물 타입(0:실종/1:목격/2:보호/3:분양)
+	 * @author Yuseung lee.
+	 * @since 2023.06.19
+	 */
+    @Override
+    public void sendPostNotification(String postId, int type) {
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.add("Content-Type", "application/json; charset=utf-8");
+
+    	JSONObject params = new JSONObject();
+    	params.put("postId", postId);
+    	params.put("type", type);
+
+    	HttpEntity<String> request = new HttpEntity<>(params.toString(), headers);
+
+    	RestTemplate template = new RestTemplate();
+    	template.postForObject("http://localhost:3001", request, String.class);
+    }
+    
 }
