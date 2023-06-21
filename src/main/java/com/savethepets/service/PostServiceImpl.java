@@ -139,12 +139,12 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public PostDetailedInfoDTO getPostDetail(Long postId) {
+    public PostDetailedInfoDTO getPostDetail(String loginId, Long postId) {
         Post post = postRepository.findOne(postId);
         if(post != null){
             User user = userRepository.findOne(post.getUserId());
             //북마크 정보 넣기
-            BookmarkId bookmarkId = new BookmarkId(post.getUserId(),postId);
+            BookmarkId bookmarkId = new BookmarkId(loginId, postId);
             Bookmark bookmark = bookmarkRepository.findOne(bookmarkId);
             boolean bookmarked = (bookmark!=null);
             //게시물 사진들 넣기

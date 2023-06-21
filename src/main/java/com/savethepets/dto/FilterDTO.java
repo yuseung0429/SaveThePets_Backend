@@ -15,4 +15,10 @@ public class FilterDTO {
     int range;
     LocalDateTime startDate;
     LocalDateTime endDate;
+    
+    public FilterDTO()
+    {
+    	this.species = -1;
+    	this.breed = -1;
+    }
 }

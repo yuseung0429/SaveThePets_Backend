@@ -13,12 +13,14 @@ import java.time.LocalDateTime;
 
 public class CommentInfoDTO {
     Long commentId;
+    String userId;
     String nickname;
     String content;
     String picture;
     LocalDateTime timestamp;
 
     public CommentInfoDTO(Comment comment,User user) {
+    	this.userId = user.getUserId();
         this.commentId = comment.getCommentId();
         this.nickname = user.getNickname();
         this.content = comment.getContent();

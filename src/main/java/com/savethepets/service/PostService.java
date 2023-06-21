@@ -14,7 +14,7 @@ public interface PostService {
     List<PostInfoDTO> getBoardPosts();
     List<PostInfoDTO> getMapPosts(DistancePostDTO distancePostDTO);
     List<PostInfoDTO> getFilteredPosts(FilterDTO filterDTO);
-    PostDetailedInfoDTO getPostDetail(Long postId);
+    PostDetailedInfoDTO getPostDetail(String loginId, Long postId);
     List<PostInfoDTO> getMyLostPosts(String userId);
 	void sendPostNotification(Long postId);
 }

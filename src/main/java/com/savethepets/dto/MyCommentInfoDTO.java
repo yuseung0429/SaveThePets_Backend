@@ -20,7 +20,7 @@ import lombok.Setter;
  *  - type : 게시물 타입(0:목격/1:실종/2:보호/3:분양)<br>
  *  - postLat : 게시물 위도<br>
  *  - postLot : 게시물 경도<br>
- *  - address : 게시물 등록주소<br>
+ *  - content : 댓글 내용<br>
  *  - time : 사용자 등록시간<br>
  *  - timestamp : 게시물 등록시간<br>
  * @author Yuseung lee.

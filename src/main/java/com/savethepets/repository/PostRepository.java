@@ -104,11 +104,11 @@ public class PostRepository {
 		String query = "SELECT p FROM Post p WHERE 1 = 1 ";
 		Map<String, Object> parameters = new HashMap<>();
 
-		if (filterDTO.getSpecies() != 0) {
+		if (filterDTO.getSpecies() != -1) {
 			query += "AND p.species = :species ";
 			parameters.put("species", filterDTO.getSpecies());
 		}
-		if (filterDTO.getBreed() != 0) {
+		if (filterDTO.getBreed() != -1) {
 			query += "AND p.breed = :breed ";
 			parameters.put("breed", filterDTO.getBreed());
 		}
@@ -146,14 +146,11 @@ public class PostRepository {
 			parameters.put("maxLot", maxLot);
 
 		}
-
 		TypedQuery<Post> typedQuery = em.createQuery(query, Post.class);
 
 		for (Map.Entry<String, Object> entry : parameters.entrySet()) {
 			typedQuery.setParameter(entry.getKey(), entry.getValue());
 		}
-
-		System.out.println(typedQuery.getResultList() != null);
 		return typedQuery.getResultList();
 	}
 }

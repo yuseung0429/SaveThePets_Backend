@@ -1,13 +1,9 @@
 package com.savethepets.service;
 
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.security.Security;
-import java.util.concurrent.ExecutionException;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.jose4j.lang.JoseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,24 +53,28 @@ public class PushServiceImpl implements PushService{
 	 */
 	@Override
 	public boolean createPush(Alarm alarm) {
-		User temp = userRepository.findOne(alarm.getReceiverId());
-		PushInfoDTO pushDTO;
-		if(temp.getEndpoint()==null || temp.getP256dh()==null || temp.getAuth()==null)
+		User temp_receiver = userRepository.findOne(alarm.getReceiverId());
+		PushInfoDTO pushInfoDTO;
+		if(temp_receiver.getEndpoint()==null || temp_receiver.getP256dh()==null || temp_receiver.getAuth()==null)
 			return false;
 		if(alarm.getType() != Alarm.COMMENT)
 		{
 			Post tempPost = postRepository.findOne(alarm.getPostId());
 			PostPicture tempPostPicture = postPictureRepository.findOne(alarm.getPostId());
-			pushDTO = new PushInfoDTO(alarm, tempPost, tempPostPicture);
+			pushInfoDTO = new PushInfoDTO(alarm, tempPost, tempPostPicture);
 		}
 		else
-			pushDTO = new PushInfoDTO(alarm, temp);
+		{
+			User temp_sender = userRepository.findOne(alarm.getSenderId());
+			pushInfoDTO = new PushInfoDTO(alarm, temp_sender);
+		}
+			
         String json;
         try {
-        	json = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(pushDTO);
+        	json = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(pushInfoDTO);
 			Security.addProvider(new BouncyCastleProvider());
         	nl.martijndwars.webpush.PushService pushService = new nl.martijndwars.webpush.PushService(pushConfig.getPublicKey(),pushConfig.getPrivateKey());
-			Notification notification = new Notification(temp.getEndpoint(), temp.getP256dh(), temp.getAuth(), json);
+			Notification notification = new Notification(temp_receiver.getEndpoint(), temp_receiver.getP256dh(), temp_receiver.getAuth(), json);
 			pushService.send(notification);
 		} catch (Exception e) {
 			e.printStackTrace();

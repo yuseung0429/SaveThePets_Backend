@@ -97,9 +97,11 @@ public class UserServiceImpl implements UserService{
 	 */
 	@Override
 	public boolean updateNickname(String userId, String nickname) {
-		if(userRepository.findByNickname(nickname).isEmpty())
+		User temp = userRepository.findOne(userId);
+		if(temp.getNickname().equals(nickname))
+			return true;
+		else if(userRepository.findByNickname(nickname).isEmpty())
 		{
-			User temp = userRepository.findOne(userId);
 			temp.setNickname(nickname);
 			userRepository.save(temp);
 			return true;

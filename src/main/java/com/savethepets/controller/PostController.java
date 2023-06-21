@@ -94,9 +94,20 @@ public class PostController {
 	};
 
 	@GetMapping("/{postId}")
-	ResponseEntity<PostDetailedInfoDTO> getPostDetail(@PathVariable("postId") Long postId) {
-		PostDetailedInfoDTO post = postService.getPostDetail(postId);
-		return new ResponseEntity<>(post, HttpStatus.OK);
+	ResponseEntity<PostDetailedInfoDTO> getPostDetail(@RequestHeader("token") String token, @PathVariable("postId") Long postId) {
+		if(token != null)
+		{
+			String temp = authService.validateToken(token);
+			PostDetailedInfoDTO post = postService.getPostDetail(temp, postId);
+			return new ResponseEntity<>(post, HttpStatus.OK);
+		}
+		else
+		{
+			PostDetailedInfoDTO post = postService.getPostDetail(null, postId);
+			return new ResponseEntity<>(post, HttpStatus.OK);
+		}
+		
+		
 	}
 
 	@GetMapping("/mylost")
