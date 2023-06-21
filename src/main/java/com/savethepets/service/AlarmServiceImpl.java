@@ -44,8 +44,6 @@ public class AlarmServiceImpl implements AlarmService{
     @Override
     public boolean createAlarm(Alarm alarm)
     {
-//    	if(alarm.getReceiverId().equals(alarm.getSenderId()))
-//    		return false;
 		alarmRepository.save(alarm);
 		return true;
     }
