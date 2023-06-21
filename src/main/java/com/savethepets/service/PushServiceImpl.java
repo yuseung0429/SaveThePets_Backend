@@ -1,10 +1,18 @@
 package com.savethepets.service;
 
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.security.Security;
+import java.util.concurrent.ExecutionException;
+
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.jose4j.lang.JoseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.savethepets.config.PushConfig;
 import com.savethepets.dto.PushInfoDTO;
 import com.savethepets.entity.Alarm;
@@ -39,7 +47,6 @@ public class PushServiceImpl implements PushService{
 	private final PostRepository postRepository;
 	private final PostPictureRepository postPictureRepository;
 	private final PushConfig pushConfig;
-	
 	/**
 	 * Description<br>
 	 *  - createPush : Push 알림을 전송하는 메소드 <br>
@@ -62,15 +69,15 @@ public class PushServiceImpl implements PushService{
 		}
 		else
 			pushDTO = new PushInfoDTO(alarm, temp);
-		ObjectMapper mapper = new ObjectMapper();
         String json;
-		try {
-			json = mapper.writeValueAsString(pushDTO);
-			nl.martijndwars.webpush.PushService pushService = new nl.martijndwars.webpush.PushService(pushConfig.getPublicKey(),pushConfig.getPrivateKey());
+        try {
+        	json = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(pushDTO);
+			Security.addProvider(new BouncyCastleProvider());
+        	nl.martijndwars.webpush.PushService pushService = new nl.martijndwars.webpush.PushService(pushConfig.getPublicKey(),pushConfig.getPrivateKey());
 			Notification notification = new Notification(temp.getEndpoint(), temp.getP256dh(), temp.getAuth(), json);
 			pushService.send(notification);
 		} catch (Exception e) {
-			return false;
+			e.printStackTrace();
 		}
 		return true;
 	}

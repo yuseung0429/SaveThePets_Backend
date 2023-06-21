@@ -34,9 +34,9 @@ public class CommentController {
 		if((userId = authService.validateToken(token)) != null)
 			// DB에 recode 삽입이 성공한 경우
 			if(commentService.createComment(new Comment(createCommentDTO.getPostId(),userId, createCommentDTO.getContent(), LocalDateTime.now()))==true){
-				Alarm temp = new Alarm(userId,createCommentDTO.getUserId(),createCommentDTO.getPostId(),LocalDateTime.now(), 4);
+				Alarm temp = new Alarm(userId, createCommentDTO.getUserId(),createCommentDTO.getPostId(),LocalDateTime.now(), 4);
 				alarmService.createAlarm(temp);
-				//pushService.createPush(temp);
+				pushService.createPush(temp);
 				return new ResponseEntity<>(true, HttpStatus.OK);
 			}
 				// DB에 recode 삽입이 실패한 경우

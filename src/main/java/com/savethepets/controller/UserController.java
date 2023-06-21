@@ -140,7 +140,7 @@ public class UserController {
 	 * <br>
 	 * Mapping method<br>
 	 *  - PostMapping<br>
-	 * @param token JWT
+	 * @param token JWTㅇ
 	 * @param pushDTO ({@link com.savethepets.dto.PushDTO})
 	 * @return ResponseEntity와 true/false(등록 성공 여부)
 	 * @author Yuseung lee.
@@ -261,6 +261,4 @@ public class UserController {
 			return new ResponseEntity<>(userService.getBookmarks(userId), HttpStatus.OK);
 		return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
 	};
-	
-	
 }

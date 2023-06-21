@@ -99,7 +99,6 @@ public class PostController {
 		return new ResponseEntity<>(post, HttpStatus.OK);
 	}
 
-
 	@GetMapping("/mylost")
 	ResponseEntity<List<PostInfoDTO>> getMyLostPosts(@RequestHeader("token") String token) {
 		String userId;
@@ -120,6 +119,6 @@ public class PostController {
 		Long sightPostId = json.get("sightPostId");
 		Alarm temp = alarmService.makeAlarm(missingPostId, sightPostId);
 		alarmService.createAlarm(temp);
-		//pushService.createPush(temp);
+		pushService.createPush(temp);
 	};
 }

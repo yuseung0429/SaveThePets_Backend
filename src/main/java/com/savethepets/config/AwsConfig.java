@@ -9,8 +9,6 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
-import lombok.Getter;
-
 /**
  * Description<br>
  *  - AwsConfig Class : AWS S3 관련 Configuration 클래스<br>
