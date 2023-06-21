@@ -3,8 +3,6 @@ package com.savethepets.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter @Setter
 public class FilterDTO {
     int species;
@@ -13,8 +11,8 @@ public class FilterDTO {
     Double userLat;
     Double userLot;
     int range;
-    LocalDateTime startDate;
-    LocalDateTime endDate;
+    String startDate;
+    String endDate;
     
     public FilterDTO()
     {

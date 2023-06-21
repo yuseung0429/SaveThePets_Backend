@@ -1,8 +1,10 @@
 package com.savethepets.repository;
 
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.time.LocalDateTime;
 
 import com.savethepets.dto.DistancePostDTO;
 import com.savethepets.dto.FilterDTO;
@@ -103,6 +105,7 @@ public class PostRepository {
 	public List<Post> findFilteredPosts(FilterDTO filterDTO) {
 		String query = "SELECT p FROM Post p WHERE 1 = 1 ";
 		Map<String, Object> parameters = new HashMap<>();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
 
 		if (filterDTO.getSpecies() != -1) {
 			query += "AND p.species = :species ";
@@ -123,13 +126,17 @@ public class PostRepository {
 			}
 			query += ") ";
 		}
+
+
 		if (filterDTO.getStartDate() != null) {
-			query += "AND p.timestamp >= :startDate ";
-			parameters.put("startDate", filterDTO.getStartDate());
+			LocalDateTime startDateTime = LocalDateTime.parse(filterDTO.getStartDate() + "T00:00:00.000", formatter);
+			query += "AND p.time >= :startDate ";
+			parameters.put("startDate", startDateTime);
 		}
 		if (filterDTO.getEndDate() != null) {
-			query += "AND p.timestamp <= :endDate ";
-			parameters.put("endDate", filterDTO.getEndDate());
+			LocalDateTime endDateTime = LocalDateTime.parse(filterDTO.getEndDate() + "T23:59:59.999", formatter);
+			query += "AND p.time <= :endDate ";
+			parameters.put("endDate", endDateTime);
 		}
 		if (filterDTO.getUserLat() != null && filterDTO.getUserLot() != null && filterDTO.getRange() > 0) {
 			double distance = filterDTO.getRange() / 111.0; // km를 위도 차이로 변환
