@@ -51,8 +51,7 @@ public class PostServiceImpl implements PostService{
             postRepository.remove(post);
             bookmarkRepository.removeByPostId(post.getPostId());
             timelineRepository.removeByPostId(post.getPostId());
-            // ### PostPicture에서도 모두 지워야됨
-            // ### awsService.remove("posts/"+post.getPostId());
+            awsService.remove("posts/"+post.getPostId());
             return true;
         }
         // DB에 postId에 해당하는 record가 없는 경우
@@ -144,9 +143,15 @@ public class PostServiceImpl implements PostService{
         if(post != null){
             User user = userRepository.findOne(post.getUserId());
             //북마크 정보 넣기
-            BookmarkId bookmarkId = new BookmarkId(loginId, postId);
-            Bookmark bookmark = bookmarkRepository.findOne(bookmarkId);
-            boolean bookmarked = (bookmark!=null);
+            boolean bookmarked;
+            if(loginId != null)
+            {
+            	BookmarkId bookmarkId = new BookmarkId(loginId, postId);
+                Bookmark bookmark = bookmarkRepository.findOne(bookmarkId);
+                bookmarked = (bookmark!=null);
+            }
+            else
+            	bookmarked = false;
             //게시물 사진들 넣기
             List<PostPicture> postPictures = postPictureRepository.findByPostId(postId);
             //게시물 댓글 넣기
